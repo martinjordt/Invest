@@ -1,0 +1,26 @@
+{
+  "id": "c06434f1-4344-41c2-bc8f-e9e7fb6d1598",
+  "name": "Invest",
+  "publisher": "Martin Hansen",
+  "brief": "Investment",
+  "description": "Investment portfolio solution",
+  "version": "1.0.0.0",
+  "compatibilityId": "1.0.0.0",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "capabilities": [],
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "11.0.0.0",
+  "application": "11.0.0.0",
+  "features": "TranslationFile",
+  "showMyCode": true,
+  "target": "Internal",
+  "idRange": {
+    "from": 70100,
+    "to": 70149
+  }
+}
