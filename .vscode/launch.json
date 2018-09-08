@@ -9,7 +9,8 @@
             "serverInstance": "Invest_Extensions",
             "port": 7449,
             "authentication": "Windows",
-            "startupObjectId": 22
+            "startupObjectId": 22,
+            "schemaUpdateMode": "Synchronize"
         }
     ]
 }
