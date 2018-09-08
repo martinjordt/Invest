@@ -1,12 +1,11 @@
-report 50000 "Import Rate from file"
+report 70100 "Import Rate from file"
 {
-    CaptionML = DAN='Indlæs rate fra fil',
-                ENU='Import Rate from file';
+    Caption='Import Rate from file';
     ProcessingOnly = true;
 
     dataset
     {
-        dataitem(DataItem1161021000;Table2000000026)
+        dataitem(DataItem1161021000;Integer)
         {
             DataItemTableView = SORTING(Number)
                                 WHERE(Number=CONST(1));
@@ -29,16 +28,14 @@ report 50000 "Import Rate from file"
             {
                 group(Indstillinger)
                 {
-                    CaptionML = DAN='Indstillinger',
-                                ENU='Options';
+                    Caption='Options';
                     field(FileName;FileName)
                     {
-                        CaptionML = DAN='Filnavn',
-                                    ENU='File Name';
+                        Caption='File Name';
 
                         trigger OnAssistEdit();
                         var
-                            FileManagement : Codeunit "419";
+                            FileManagement : Codeunit "File Management";
                         begin
                             FileName := FileManagement.OpenFileDialog(Text002,FileName,FileManagement.GetToFilterText('','.txt'));
                         end;
@@ -46,14 +43,6 @@ report 50000 "Import Rate from file"
                 }
             }
         }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     trigger OnPreReport();
@@ -64,7 +53,7 @@ report 50000 "Import Rate from file"
 
     var
         FileName : Text;
-        Text001 : TextConst DAN='Du skal angive et filnavn',ENU='You must enter a filename';
-        Text002 : TextConst DAN='Indlæs fra tekstfil',ENU='Import from Text File';
+        Text001 : label 'You must enter a filename';
+        Text002 : label 'Import from Text File';
 }
 

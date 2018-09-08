@@ -144,7 +144,7 @@ page 50141 "Security Chart - Rate"
     }
 
     var
-        SecurityGlobal : Record "50101";
+        SecurityGlobal : Record Security;
         SecurityRateChartMgt : Codeunit "50002";
         StatusText : Text[250];
         Text001 : TextConst DAN='Periode',ENU='Period';
@@ -160,7 +160,7 @@ page 50141 "Security Chart - Rate"
         StatusText := SecurityRateChartMgt.GetChartStatusText;
     end;
 
-    procedure SetGlobal(Security : Record "50101");
+    procedure SetGlobal(Security : Record Security);
     begin
         SecurityGlobal := Security;
         SecurityRateChartMgt.SetChartGlobal(SecurityGlobal);

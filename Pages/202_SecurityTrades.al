@@ -1,11 +1,10 @@
-page 50102 "Security Trades"
+page 70202 "Security Trades"
 {
-    CaptionML = DAN='Værdipapirhandler',
-                ENU='Security Trades';
+    Caption='Security Trades';
     Editable = false;
     PageType = List;
-    SourceTable = Table50102;
-    SourceTableView = SORTING(Date)
+    SourceTable = "Security Trade";
+    SourceTableView = SORTING("Posting Date")
                       ORDER(Descending);
 
     layout
@@ -16,11 +15,10 @@ page 50102 "Security Trades"
             {
                 field(HasAttachment;HasAttachment)
                 {
-                    CaptionML = DAN='Vedhæftet fil',
-                                ENU='Has Attachemnt';
+                    Caption='Has Attachemnt';
                     Editable = false;
                 }
-                field(Date;Date)
+                field("posting Date";"Posting Date")
                 {
                 }
                 field("Account No.";"Account No.")
@@ -58,8 +56,8 @@ page 50102 "Security Trades"
         {
             part(;50211)
             {
-                SubPageLink = Entry No.=FIELD(Entry No.);
-                SubPageView = SORTING(Date);
+                SubPageLink = "Entry No."=FIELD("Entry No.");
+                SubPageView = SORTING("Posting Date");
             }
         }
     }
@@ -68,10 +66,9 @@ page 50102 "Security Trades"
     {
         area(processing)
         {
-            action("Åben vedhæftning")
+            action("OpenAttachment")
             {
-                CaptionML = DAN='Åben vedhæftning',
-                            ENU='Open Attachment';
+                Caption='Open Attachment';
                 Image = ExportFile;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -79,7 +76,7 @@ page 50102 "Security Trades"
 
                 trigger OnAction();
                 var
-                    DropAreaMgt : Codeunit "50011";
+                    DropAreaMgt : Codeunit "Drop Area Mgt. Trade";
                 begin
                     DropAreaMgt.Download(Rec);
                 end;

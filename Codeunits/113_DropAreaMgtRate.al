@@ -1,4 +1,4 @@
-codeunit 50013 "Drop Area Mgt. Rate"
+codeunit 70113 "Drop Area Mgt. Rate"
 {
 
     trigger OnRun();
@@ -8,7 +8,7 @@ codeunit 50013 "Drop Area Mgt. Rate"
     var
         ReadAsDataUrlHeader : Label 'data:';
         ProgressText : Label 'File upload in progress...\#1########################################\@2@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@';
-        InvestmentSetup : Record "50000";
+        InvestmentSetup : Record "Investment Setup";
         FromMemoryStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.MemoryStream";
         CurrentFilename : Text;
         FileDropInProgress : Boolean;
@@ -88,7 +88,7 @@ codeunit 50013 "Drop Area Mgt. Rate"
         FromMemoryStream.Write(Encoding.GetBytes(Data), 0, STRLEN(Data));
     end;
 
-    procedure FileDropEnd(var SecurityJnlRate : Record "50108");
+    procedure FileDropEnd(var SecurityJnlRate : Record "Security Journal Line");
     var
         ImportRatesfromFile : Codeunit "50020";
         ToMemoryStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.MemoryStream";

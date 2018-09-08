@@ -1,7 +1,6 @@
-page 50001 "Investment Rolecenter"
+page 70101 "Investment Rolecenter"
 {
-    CaptionML = DAN='Investeringsrollecenter',
-                ENU='Investment Rolecenter';
+    Caption='Investment Rolecenter';
     PageType = RoleCenter;
 
     layout
@@ -23,24 +22,20 @@ page 50001 "Investment Rolecenter"
         {
             group(Poster)
             {
-                CaptionML = DAN='Poster',
-                            ENU='Entries';
+                Caption='Entries';
                 action(Handler)
                 {
-                    CaptionML = DAN='Handler',
-                                ENU='Trades';
+                    Caption='Trades';
                     RunObject = Page 50102;
                 }
                 action(Udbytte)
                 {
-                    CaptionML = DAN='Udbytte',
-                                ENU='Returns';
+                    Caption='Returns';
                     RunObject = Page 50103;
                 }
                 action(Kurser)
                 {
-                    CaptionML = DAN='Kurser',
-                                ENU='Rates';
+                    Caption='Rates';
                     RunObject = Page 50104;
                 }
             }
@@ -48,8 +43,7 @@ page 50001 "Investment Rolecenter"
             {
                 action("ROI Grafer")
                 {
-                    CaptionML = DAN='ROI Grafer',
-                                ENU='ROI Charts';
+                    Caption='ROI Charts';
                     RunObject = Page 50300;
                 }
             }
@@ -58,44 +52,38 @@ page 50001 "Investment Rolecenter"
         {
             group(Opgaver)
             {
-                CaptionML = DAN='Opgaver',
-                            ENU='Tasks';
-                action("Køb/Sælg")
+                Caption='Tasks';
+                action("BuySell")
                 {
-                    CaptionML = DAN='Køb/Sælg',
-                                ENU='Buy/Sell';
+                    Caption'Buy/Sell';
                     Image = Bank;
                     Promoted = true;
                     PromotedIsBig = true;
                     RunObject = Page 50200;
                 }
-                action("Opdater kurser")
+                action("UpdateRates")
                 {
-                    CaptionML = DAN='Opdater kurser',
-                                ENU='Update Rates';
+                    Caption='Update Rates';
                     Image = NewExchangeRate;
                     Promoted = true;
                     PromotedIsBig = true;
                     RunObject = Page 50202;
                 }
-                action("Registrer udbytte")
+                action("RegisterReturn")
                 {
-                    CaptionML = DAN='Registrer udbytte',
-                                ENU='Register Return';
+                    Caption='Register Return';
                     Image = CalculateDiscount;
                     Promoted = true;
                     PromotedIsBig = true;
                     RunObject = Page 50201;
                 }
             }
-            group("Opsætning")
+            group("Setup")
             {
-                CaptionML = DAN='Opsætning',
-                            ENU='Setup';
-                action("Opsætning")
+                Caption='Setup';
+                action("Setup")
                 {
-                    CaptionML = DAN='Opsætning',
-                                ENU='Setup';
+                    Caption='Setup';
                     Image = Setup;
                     RunObject = Page 50000;
                 }

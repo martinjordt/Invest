@@ -6,7 +6,7 @@ page 50210 "Security Jnl. - Drop Area"
     InsertAllowed = false;
     ModifyAllowed = false;
     PageType = CardPart;
-    SourceTable = Table50108;
+    SourceTable = TableSecurity Journal Line;
     SourceTableView = SORTING(Journal Template Name,Line No.);
 
     layout

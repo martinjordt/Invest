@@ -1,7 +1,6 @@
-table 50100 Account
+table 70200 Account
 {
-    CaptionML = DAN='Depot',
-                ENU='Account';
+    Caption='Account';
     DrillDownPageID = 50120;
     LookupPageID = 50120;
 
@@ -9,23 +8,19 @@ table 50100 Account
     {
         field(1;"No.";Code[20])
         {
-            CaptionML = DAN='Nr.',
-                        ENU='No.';
+            Caption='No.';
         }
         field(2;Name;Text[50])
         {
-            CaptionML = DAN='Navn',
-                        ENU='Name';
+            Caption='Name';
         }
         field(8;"Bank Name";Text[50])
         {
-            CaptionML = DAN='Banknavn',
-                        ENU='Bank Name';
+            Caption='Bank Name';
         }
         field(9;"Bank Branch No.";Text[20])
         {
-            CaptionML = DAN='Bankregistreringsnr.',
-                        ENU='Bank Branch No.';
+            Caption='Bank Branch No.';
 
             trigger OnValidate();
             begin
@@ -35,8 +30,7 @@ table 50100 Account
         }
         field(10;"Bank Account No.";Text[30])
         {
-            CaptionML = DAN='Bankkontonr.',
-                        ENU='Bank Account No.';
+            Caption='Bank Account No.';
 
             trigger OnValidate();
             begin
@@ -46,49 +40,43 @@ table 50100 Account
         }
         field(97;"No. Series";Code[10])
         {
-            CaptionML = DAN='Nummerserie',
-                        ENU='No. Series';
+            Caption='No. Series';
             Editable = false;
             TableRelation = "No. Series";
         }
         field(110;"Current Account Value";Decimal)
         {
-            CalcFormula = Sum(Security."Current Share Amt." WHERE (Account No.=FIELD(No.),
-                                                                   Status=CONST(Active)));
-            CaptionML = DAN='Depot værdi',
-                        ENU='Current Account Value';
+            Caption='Current Account Value';
+            CalcFormula = Sum(Security."Current Share Amt." WHERE ("Account No."=FIELD("No."),
+                                                                   Status=CONST(Active)));            
             Editable = false;
             FieldClass = FlowField;
             NotBlank = false;
         }
         field(111;"Current Profit/Loss";Decimal)
         {
-            CalcFormula = Sum(Security."Current Profit/Loss" WHERE (Status=CONST(Active)));
-            CaptionML = DAN='Gevinst/Tab',
-                        ENU='Current Profit/Loss';
+            Caption='Current Profit/Loss';
+            CalcFormula = Sum(Security."Current Profit/Loss" WHERE (Status=CONST(Active)));            
             Editable = false;
             FieldClass = FlowField;
         }
         field(200;"Security Return LY";Decimal)
         {
-            CalcFormula = Sum(Security."Return Amt. LY");
-            CaptionML = DAN='Udbytte sidate år',
-                        ENU='Security Return LY';
+            Caption='Security Return LY';
+            CalcFormula = Sum(Security."Return Amt. LY");            
             Editable = false;
             FieldClass = FlowField;
         }
         field(201;"Security Return YTD";Decimal)
         {
-            CalcFormula = Sum(Security."Return Amt. YTD");
-            CaptionML = DAN='Udbytte ÅTD',
-                        ENU='Security Return YTD';
+            Caption='Security Return YTD';
+            CalcFormula = Sum(Security."Return Amt. YTD");            
             Editable = false;
             FieldClass = FlowField;
         }
         field(300;"Date Filter";Date)
         {
-            CaptionML = DAN='Datofilter',
-                        ENU='Date Filter';
+            Caption='Date Filter';
             FieldClass = FlowFilter;
         }
     }
@@ -96,18 +84,13 @@ table 50100 Account
     keys
     {
         key(Key1;"No.")
-        {
-        }
-    }
-
-    fieldgroups
-    {
+        {}
     }
 
     trigger OnInsert();
     var
-        InvSetup : Record "50000";
-        NoSeriesMgt : Codeunit "396";
+        InvSetup : Record "Investment Setup";
+        NoSeriesMgt : Codeunit "NoSeriesManagement";
     begin
         IF "No." = '' THEN BEGIN
           InvSetup.GET;
@@ -116,4 +99,3 @@ table 50100 Account
         END;
     end;
 }
-

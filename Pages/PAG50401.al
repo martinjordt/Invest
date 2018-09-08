@@ -27,7 +27,7 @@ page 50401 "Drop Area Files"
         {
             part(;50400)
             {
-                SubPageLink = Entry No.=FIELD(Entry No.);
+                SubPageLink = "Entry No."=FIELD("Entry No.");
                 SubPageView = SORTING(Entry No.);
             }
         }

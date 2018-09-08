@@ -1,14 +1,12 @@
-page 50101 "Security Card"
+page 70201 "Security Card"
 {
-    CaptionML = DAN='Værdipapirkort',
-                ENU='Security Card';
+    Caption='Security Card';
     DeleteAllowed = false;
     InsertAllowed = false;
     PageType = Card;
-    PromotedActionCategoriesML = DAN='Ny,Behandl,Rapportér,Værdipapir,Poster',
-                                 ENU='New,Process,Report,Security,Entries';
+    PromotedActionCategories='New,Process,Report,Security,Entries';
     RefreshOnActivate = true;
-    SourceTable = Table50101;
+    SourceTable = Security;
 
     layout
     {
@@ -40,17 +38,15 @@ page 50101 "Security Card"
                 field("Return Plan";"Return Plan")
                 {
                 }
-                group("Bedømmelse")
+                group(Rating)
                 {
-                    CaptionML = DAN='Bedømmelse',
-                                ENU='Ratings';
+                    Caption='Ratings';
                     grid()
                     {
                         GridLayout = Rows;
-                        group(Risiko)
+                        group(RiskGrp)
                         {
-                            CaptionML = DAN='Risiko',
-                                        ENU='Risk';
+                            Caption='Risk';
                             field(RiskRatio;Risk)
                             {
                                 ColumnSpan = 2;
@@ -65,8 +61,7 @@ page 50101 "Security Card"
                         }
                         group("Morning Star")
                         {
-                            CaptionML = DAN='Morning Star',
-                                        ENU='Morning Star';
+                            Caption='Morning Star';
                             field(MSRatio;"Morning Star Rating")
                             {
                                 ColumnSpan = 2;
@@ -83,8 +78,7 @@ page 50101 "Security Card"
                 }
                 group(Handel)
                 {
-                    CaptionML = DAN='Handel',
-                                ENU='Trade';
+                    Caption='Trade';
                     grid()
                     {
                         GridLayout = Rows;
@@ -102,10 +96,9 @@ page 50101 "Security Card"
                         }
                     }
                 }
-                group("Værdi")
+                group(ValueGrp)
                 {
-                    CaptionML = DAN='Værdi',
-                                ENU='Value';
+                    Caption='Value';
                     grid()
                     {
                         GridLayout = Rows;
@@ -126,14 +119,13 @@ page 50101 "Security Card"
                         }
                     }
                 }
-                group(Udbytte)
+                group(ReturnGrp)
                 {
-                    CaptionML = DAN='Udbytte',
-                                ENU='Returns';
-                    grid()
+                    Caption='Returns';
+                    grid(GridGrp)
                     {
                         GridLayout = Rows;
-                        group()
+                        group(ReturnGrpRows)
                         {
                             field("Last Return Date";"Last Return Date")
                             {
@@ -153,40 +145,36 @@ page 50101 "Security Card"
                         }
                     }
                 }
-                group(Kurs)
+                group(RateGrp)
                 {
-                    CaptionML = DAN='Kurs',
-                                ENU='Rate';
-                    grid()
+                    Caption='Rate';
+                    grid(GridGrp)
                     {
                         GridLayout = Rows;
-                        group()
+                        group(RateGrid)
                         {
                             field(GainLoss1;GainLoss1)
                             {
-                                CaptionML = DAN='Gevinst/Tab senest',
-                                            ENU='Gain/Loss Latest';
+                                Caption='Gain/Loss Latest';
                                 ColumnSpan = 2;
                                 Editable = false;
                             }
                             field(GainLoss2;GainLoss2)
                             {
-                                CaptionML = DAN='Gevinst/Tab i alt',
-                                            ENU='Gain/Loss Overall';
+                                Caption='Gain/Loss Overall';
                                 ColumnSpan = 2;
                                 Editable = false;
                             }
                         }
                     }
                 }
-                group(ROI)
+                group(ROIGrp)
                 {
-                    CaptionML = DAN='ROI',
-                                ENU='ROI';
-                    grid()
+                    Caption='ROI';
+                    grid(ROIGrid)
                     {
                         GridLayout = Rows;
-                        group()
+                        group(GrpRows)
                         {
                             field("Last ROI per 1000";"Last ROI per 1000")
                             {
@@ -206,40 +194,37 @@ page 50101 "Security Card"
             }
             part(RatePart;50141)
             {
-                CaptionML = DAN='Kurser',
-                            ENU='Rates';
+                Caption='Rates';
             }
         }
         area(factboxes)
         {
             part(ReturnPart;50140)
             {
-                CaptionML = DAN='Udbytte',
-                            ENU='Returns';
+                Caption='Returns';
             }
             part(ReturnPart2;50142)
             {
-                CaptionML = DAN='ROI',
-                            ENU='ROI';
+                Caption='ROI';
             }
-            part(;50131)
+            part(Return;50131)
             {
-                SubPageLink = Account No.=FIELD(Account No.),
-                              Security No.=FIELD(No.);
+                SubPageLink = "Account No."=FIELD("Account No."),
+                              "Security No."=FIELD("No.");
             }
-            part(;50130)
+            part(Trade;50130)
             {
-                SubPageLink = Account No.=FIELD(Account No.),
-                              Security No.=FIELD(No.);
+                SubPageLink = "Account No."=FIELD("Account No."),
+                              "Security No."=FIELD("No.");
             }
-            part(;50132)
+            part(Rate;50132)
             {
-                SubPageLink = Security No.=FIELD(No.);
+                SubPageLink = "Security No."=FIELD("No.");
             }
-            systempart(;Links)
+            systempart(Links;Links)
             {
             }
-            systempart(;Notes)
+            systempart(Notes;Notes)
             {
             }
         }
@@ -251,12 +236,10 @@ page 50101 "Security Card"
         {
             group("Periodiske aktiviteter")
             {
-                CaptionML = DAN='Periodiske aktiviteter',
-                            ENU='Periodic Activities';
-                action("Køb/Sælg")
+                Caption='Periodic Activities';
+                action("BuySell")
                 {
-                    CaptionML = DAN='Køb/Sælg',
-                                ENU='Buy/Sell';
+                    Caption='Buy/Sell';
                     Image = Bank;
                     Promoted = true;
                     PromotedIsBig = true;
@@ -266,10 +249,9 @@ page 50101 "Security Card"
                         BuySell();
                     end;
                 }
-                action("Opdater kurser")
+                action("UpdateRates")
                 {
-                    CaptionML = DAN='Opdater kurser',
-                                ENU='Update Rates';
+                    Caption='Update Rates';
                     Image = NewExchangeRate;
                     Promoted = true;
                     PromotedIsBig = true;
@@ -279,10 +261,9 @@ page 50101 "Security Card"
                         UpdateRate();
                     end;
                 }
-                action("Registrer udbytte")
+                action("RegisterReturn")
                 {
-                    CaptionML = DAN='Registrer udbytte',
-                                ENU='Register Return';
+                    Caption='Register Return';
                     Image = CalculateDiscount;
                     Promoted = true;
                     PromotedIsBig = true;
@@ -293,41 +274,37 @@ page 50101 "Security Card"
                     end;
                 }
             }
-            group(Poster)
+            group(EntriesGrp)
             {
-                CaptionML = DAN='Poster',
-                            ENU='Entries';
-                action(Handler)
+                Caption='Entries';
+                action(Trades)
                 {
-                    CaptionML = DAN='Handler',
-                                ENU='Trades';
+                    Caption='Trades';
                     Image = CashFlow;
                     Promoted = true;
                     PromotedCategory = Category5;
-                    RunObject = Page 50102;
-                    RunPageLink = Security No.=FIELD(No.),
-                                  Account No.=FIELD(Account No.);
+                    RunObject = Page "Security Trades";
+                    RunPageLink = "Security No."=FIELD("No."),
+                                  "Account No."=FIELD("Account No.");
                 }
-                action(Udbytte)
+                action(Returns)
                 {
-                    CaptionML = DAN='Udbytte',
-                                ENU='Returns';
+                    Caption='Returns';
                     Image = CoupledCurrency;
                     Promoted = true;
                     PromotedCategory = Category5;
-                    RunObject = Page 50103;
-                    RunPageLink = Security No.=FIELD(No.),
-                                  Account No.=FIELD(Account No.);
+                    RunObject = Page "Security Returns";
+                    RunPageLink = "Security No."=FIELD("No."),
+                                  "Account No."=FIELD("Account No.");
                 }
-                action(Kurser)
+                action(Rates)
                 {
-                    CaptionML = DAN='Kurser',
-                                ENU='Rates';
+                    Caption='Rates';
                     Image = PayrollStatistics;
                     Promoted = true;
                     PromotedCategory = Category5;
-                    RunObject = Page 50104;
-                    RunPageLink = Security No.=FIELD(No.);
+                    RunObject = Page "Security Rates";
+                    RunPageLink = "Security No."=FIELD("No.");
                 }
             }
         }

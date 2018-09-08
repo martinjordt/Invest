@@ -1,4 +1,4 @@
-codeunit 50012 "Drop Area Mgt. Return"
+codeunit 70112 "Drop Area Mgt. Return"
 {
 
     trigger OnRun();
@@ -81,7 +81,7 @@ codeunit 50012 "Drop Area Mgt. Return"
         FromMemoryStream.Write(Encoding.GetBytes(Data), 0, STRLEN(Data));
     end;
 
-    procedure FileDropEnd(var SecurityReturn : Record "50103");
+    procedure FileDropEnd(var SecurityReturn : Record "Security Return");
     var
         ToMemoryStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.MemoryStream";
         FileStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.FileStream";
@@ -117,10 +117,10 @@ codeunit 50012 "Drop Area Mgt. Return"
         EXIT(CurrentFilename);
     end;
 
-    procedure Download(SecurityReturn : Record "50103");
+    procedure Download(SecurityReturn : Record "Security Return");
     var
-        FileMgt : Codeunit "419";
-        TempBlob : Record "99008535";
+        FileMgt : Codeunit "File Management";
+        TempBlob : Record "TempBlob";
     begin
         IF NOT SecurityReturn.Attachment.HASVALUE THEN
           EXIT;

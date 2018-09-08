@@ -1,27 +1,24 @@
-codeunit 50000 InvestJnlMgt
+codeunit 70100 InvestJnlMgt
 {
-    TableNo = 50108;
+    TableNo = "Security Journal Line";
 
     trigger OnRun();
     var
-        SecurityJournalLine : Record "50108";
+        SecurityJournalLine : Record "Security Journal Line";
     begin
         IF NOT DIALOG.CONFIRM(Text003) THEN
           EXIT;
 
-        IF GUIALLOWED THEN
-          Window.OPEN(Text001 + Text002);
+        Window.OPEN(Text001 + Text002);
 
         SecurityJournalLine.COPY(Rec);
         SecurityJournalLine.SETRANGE("Entry Type","Entry Type");
 
         IF SecurityJournalLine.FINDFIRST THEN
           REPEAT
-            IF GUIALLOWED THEN BEGIN
-              Window.UPDATE(1,SecurityJournalLine."Entry Type"::"Security Trade");
+                      Window.UPDATE(1,SecurityJournalLine."Entry Type"::"Security Trade");
               Window.UPDATE(2,SecurityJournalLine."Security Name");
-            END;
-            PostJournal(SecurityJournalLine);
+                    PostJournal(SecurityJournalLine);
           UNTIL SecurityJournalLine.NEXT = 0;
 
         Rec := SecurityJournalLine;
@@ -29,15 +26,15 @@ codeunit 50000 InvestJnlMgt
 
     var
         Window : Dialog;
-        Text001 : TextConst DAN='Bogfører: #1#################\',ENU='Posting: #1#################\';
-        Text002 : TextConst DAN='Værdipapir: #2######################',ENU='Security: #2######################';
-        Text003 : TextConst DAN='Vil du registrere kladden?',ENU='Do You wish to register the journal?';
-        Text004 : TextConst DAN='%1 for %2 %3 er mere end 15% forskellig fra sidste %4',ENU='%1 for %2 %3 is more than 15% different from last %4';
+        Text001 : label 'Posting: #1#################\';
+        Text002 : label 'Security: #2######################';
+        Text003 : label 'Do You wish to register the journal?';
+        Text004 : label '%1 for %2 %3 is more than 15% different from last %4';
 
-    procedure PostJournal(var SecurityJournalLine : Record "50108");
+    procedure PostJournal(var SecurityJournalLine : Record "Security Journal Line");
     var
-        Security : Record "50101";
-        SecurityJournalLine2 : Record "50108";
+        Security : Record Security;
+        SecurityJournalLine2 : Record "Security Journal Line";
         SecurityFunctions : Codeunit "50006";
     begin
         // Post line
@@ -65,9 +62,9 @@ codeunit 50000 InvestJnlMgt
           SecurityJournalLine2.DELETE(TRUE);
     end;
 
-    local procedure SecurityTrade(SecurityJournalLine : Record "50108");
+    local procedure SecurityTrade(SecurityJournalLine : Record "Security Journal Line");
     var
-        Security : Record "50101";
+        Security : Record Security;
     begin
         // Test line
         WITH SecurityJournalLine DO BEGIN
@@ -106,7 +103,7 @@ codeunit 50000 InvestJnlMgt
         CreateRate(SecurityJournalLine,TRUE);
     end;
 
-    local procedure SecurityReturn(SecurityJournalLine : Record "50108");
+    local procedure SecurityReturn(SecurityJournalLine : Record "Security Journal Line");
     begin
         // Test line
         WITH SecurityJournalLine DO BEGIN
@@ -123,9 +120,9 @@ codeunit 50000 InvestJnlMgt
         CreateReturn(SecurityJournalLine);
     end;
 
-    local procedure SecurityRate(SecurityJournalLine : Record "50108");
+    local procedure SecurityRate(SecurityJournalLine : Record "Security Journal Line");
     var
-        SecurityRate : Record "50104";
+        SecurityRate : Record "Security Rate";
         High : Decimal;
         Low : Decimal;
     begin
@@ -138,7 +135,7 @@ codeunit 50000 InvestJnlMgt
 
           // Sanity Check
           SecurityRate.RESET;
-          SecurityRate.SETCURRENTKEY(Date);
+          SecurityRate.SETCURRENTKEY("Rate Date");
           SecurityRate.SETRANGE("Security No.","Security No.");
           IF SecurityRate.FINDLAST THEN BEGIN
             High := SecurityRate.Rate * 1.5;
@@ -158,11 +155,7 @@ codeunit 50000 InvestJnlMgt
         CreateRate(SecurityJournalLine,FALSE);
     end;
 
-    local procedure "---"();
-    begin
-    end;
-
-    local procedure CreateSecurity(SecurityJournalLine : Record "50108";var Security : Record "50101");
+    local procedure CreateSecurity(SecurityJournalLine : Record "Security Journal Line";var Security : Record Security);
     begin
         WITH SecurityJournalLine DO BEGIN
           CLEAR(Security);
@@ -180,15 +173,15 @@ codeunit 50000 InvestJnlMgt
         END;
     end;
 
-    local procedure CreateTrade(SecurityJournalLine : Record "50108");
+    local procedure CreateTrade(SecurityJournalLine : Record "Security Journal Line");
     var
-        SecurityTrade : Record "50102";
+        SecurityTrade : Record "Security Trade";
     begin
         WITH SecurityJournalLine DO BEGIN
           CALCFIELDS(Attachment);
 
           SecurityTrade.INIT;
-          SecurityTrade.Date := "Posting Date";
+          SecurityTrade."Posting Date" := "Posting Date";
           SecurityTrade."Account No." := "Account No.";
           SecurityTrade."Security No." := "Security No.";
           SecurityTrade."ISIN Code" := "ISIN Code";
@@ -207,13 +200,13 @@ codeunit 50000 InvestJnlMgt
         END;
     end;
 
-    local procedure CreateRate(SecurityJournalLine : Record "50108";InitialEntry : Boolean);
+    local procedure CreateRate(SecurityJournalLine : Record "Security Journal Line";InitialEntry : Boolean);
     var
-        SecurityRate : Record "50104";
+        SecurityRate : Record "Security Rate";
     begin
         WITH SecurityJournalLine DO BEGIN
           SecurityRate.INIT;
-          SecurityRate.Date := "Posting Date";
+          SecurityRate."Rate Date" := "Posting Date";
           SecurityRate."Security No." := "Security No.";
           SecurityRate."ISIN Code" := "ISIN Code";
           SecurityRate.Rate := "Share Price";
@@ -225,15 +218,15 @@ codeunit 50000 InvestJnlMgt
         END;
     end;
 
-    local procedure CreateReturn(SecurityJournalLine : Record "50108");
+    local procedure CreateReturn(SecurityJournalLine : Record "Security Journal Line");
     var
-        SecurityReturn : Record "50103";
+        SecurityReturn : Record "Security Return";
     begin
         WITH SecurityJournalLine DO BEGIN
           CALCFIELDS(Attachment);
 
           SecurityReturn.INIT;
-          SecurityReturn.Date := "Posting Date";
+          SecurityReturn."Posting Date" := "Posting Date";
           SecurityReturn."Account No." := "Account No.";
           SecurityReturn."Security No." := "Security No.";
           SecurityReturn."Security Type" := "Security Type";

@@ -144,7 +144,7 @@ page 50142 "Security Chart - Return ROI"
     }
 
     var
-        SecurityGlobal : Record "50101";
+        SecurityGlobal : Record Security;
         SecurityReturnChartMgt : Codeunit "50003";
         StatusText : Text[250];
         Text001 : TextConst DAN='Periode',ENU='Period';
@@ -160,7 +160,7 @@ page 50142 "Security Chart - Return ROI"
         StatusText := SecurityReturnChartMgt.GetChartStatusText;
     end;
 
-    procedure SetGlobal(Security : Record "50101");
+    procedure SetGlobal(Security : Record Security);
     begin
         SecurityGlobal := Security;
         SecurityReturnChartMgt.SetChartGlobal(SecurityGlobal);

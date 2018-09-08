@@ -1,16 +1,16 @@
-codeunit 50006 "Security Functions"
+codeunit 70106 "Security Functions"
 {
 
     trigger OnRun();
     begin
     end;
 
-    procedure SecurityKPI(var Security : Record "50101");
+    procedure SecurityKPI(var Security : Record Security);
     var
-        SecurityRate : Record "50104";
-        SecurityRate2 : Record "50104";
-        SecurityReturn : Record "50103";
-        DateRec : Record "2000000007";
+        SecurityRate : Record "Security Rate";
+        SecurityRate2 : Record "Security Rate";
+        SecurityReturn : Record "Security Return";
+        DateRec : Record "Date";
         NoOfPeriods : Integer;
         PeriodStart : Date;
         PeriodEnd : Date;
@@ -19,7 +19,7 @@ codeunit 50006 "Security Functions"
         WITH Security DO BEGIN
           // Current Rate
           SecurityRate.RESET;
-          SecurityRate.SETCURRENTKEY(Date);
+          SecurityRate.SETCURRENTKEY("Rate Date");
           SecurityRate.SETRANGE("Security No.","No.");
           IF SecurityRate.FINDLAST THEN BEGIN
             "Current Share Rate" := SecurityRate.Rate;
@@ -49,7 +49,7 @@ codeunit 50006 "Security Functions"
 
           // Latest Return/ROI
           SecurityReturn.RESET;
-          SecurityReturn.SETCURRENTKEY(Date);
+          SecurityReturn.SETCURRENTKEY("Posting Date");
           SecurityReturn.SETRANGE("Security No.","No.");
           IF SecurityReturn.FINDLAST THEN BEGIN
             "Last Return Amt." := SecurityReturn."Gros Return Amount";
@@ -62,26 +62,26 @@ codeunit 50006 "Security Functions"
 
           // Return/ROI YTD
           SecurityReturn.RESET;
-          SecurityReturn.SETCURRENTKEY(Date);
+          SecurityReturn.SETCURRENTKEY("Posting Date");
           SecurityReturn.SETRANGE("Security No.","No.");
-          SecurityReturn.SETRANGE(Date,CALCDATE('<CY-1Y+1D>',WORKDATE),WORKDATE);
+          SecurityReturn.SETRANGE("Posting Date",CALCDATE('<CY-1Y+1D>',WORKDATE),WORKDATE);
           SecurityReturn.CALCSUMS("Gros Return Amount",SecurityReturn."ROI Gross");
           "Return Amt. YTD" := SecurityReturn."Gros Return Amount";
           "ROI YTD per 1000" := SecurityReturn."ROI Gross" * 1000;
 
           // Return/ROI LY
-          SecurityReturn.SETRANGE(Date,CALCDATE('<CY-2Y+1D>',WORKDATE),CALCDATE('<CY-1Y>'));
+          SecurityReturn.SETRANGE("Posting Date",CALCDATE('<CY-2Y+1D>',WORKDATE),CALCDATE('<CY-1Y>'));
           SecurityReturn.CALCSUMS("Gros Return Amount",SecurityReturn."ROI Gross");
           "Return Amt. LY" := SecurityReturn."Gros Return Amount";
           "ROI LY per 1000" := SecurityReturn."ROI Gross" * 1000;
 
           // Average ROI per year total
           CALCFIELDS("Total Purchase Amt.","Total Return Amt.");
-          SecurityReturn.SETRANGE(Date);
+          SecurityReturn.SETRANGE("Posting Date");
           IF SecurityReturn.FINDFIRST THEN BEGIN
-            PeriodStart := CALCDATE('<CY-1Y+1D>',SecurityReturn.Date);
+            PeriodStart := CALCDATE('<CY-1Y+1D>',SecurityReturn."Posting Date");
             SecurityReturn.FINDLAST;
-            PeriodEnd := CALCDATE('<CY>',SecurityReturn.Date);
+            PeriodEnd := CALCDATE('<CY>',SecurityReturn."Posting Date");
             DateRec.RESET;
             DateRec.SETRANGE("Period Type",DateRec."Period Type"::Month);
             DateRec.SETRANGE("Period Start",PeriodStart,PeriodEnd);
@@ -93,16 +93,16 @@ codeunit 50006 "Security Functions"
         END;
     end;
 
-    procedure SecurityTradeKPI(var Security : Record "50101");
+    procedure SecurityTradeKPI(var Security : Record Security);
     var
-        SecurityRate : Record "50104";
-        SecurityTrade : Record "50102";
+        SecurityRate : Record "Security Rate";
+        SecurityTrade : Record "Security Trade";
     begin
         WITH Security DO BEGIN
 
           // Current Rate
           SecurityRate.RESET;
-          SecurityRate.SETCURRENTKEY(Date);
+          SecurityRate.SETCURRENTKEY("Rate Date");
           SecurityRate.SETRANGE("Security No.","No.");
           IF SecurityRate.FINDLAST THEN BEGIN
             SecurityTrade.RESET;
@@ -118,9 +118,9 @@ codeunit 50006 "Security Functions"
         END;
     end;
 
-    procedure SetStyleExpr_Security(Security : Record "50101";var Style1 : Text;var Style2 : Text;var Style3 : Text);
+    procedure SetStyleExpr_Security(Security : Record Security;var Style1 : Text;var Style2 : Text;var Style3 : Text);
     var
-        SecurityReturn : Record "50103";
+        SecurityReturn : Record "Security Return";
         Counter : Integer;
     begin
         Style1 := 'Standard';
@@ -136,10 +136,10 @@ codeunit 50006 "Security Functions"
         // Active Securities
         IF Security.Status = Security.Status::Active THEN BEGIN
           CLEAR(SecurityReturn);
-          SecurityReturn.SETCURRENTKEY(Date);
+          SecurityReturn.SETCURRENTKEY("Posting Date");
           SecurityReturn.SETRANGE("Security Type",Security."Security Type");
           SecurityReturn.SETRANGE("Account No.",Security."Account No.");
-          SecurityReturn.SETRANGE(Date,CALCDATE('<CY+1D-1Y>',WORKDATE),CALCDATE('<CY>',WORKDATE));
+          SecurityReturn.SETRANGE("Posting Date",CALCDATE('<CY+1D-1Y>',WORKDATE),CALCDATE('<CY>',WORKDATE));
           SecurityReturn.CALCSUMS("ROI Gross");
           Counter := SecurityReturn.COUNT;
           IF Counter > 0 THEN BEGIN
@@ -174,9 +174,9 @@ codeunit 50006 "Security Functions"
         END;
     end;
 
-    procedure SetStyleExpr_Jnl(SecurityJournalLine : Record "50108") : Text;
+    procedure SetStyleExpr_Jnl(SecurityJournalLine : Record "Security Journal Line") : Text;
     var
-        SecurityReturn : Record "50103";
+        SecurityReturn : Record "Security Return";
         Counter : Integer;
     begin
         WITH SecurityJournalLine DO BEGIN

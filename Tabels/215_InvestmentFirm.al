@@ -1,7 +1,6 @@
-table 50110 "Investment Firm"
+table 70215 "Investment Firm"
 {
-    CaptionML = DAN='Investeringsselskab',
-                ENU='Investment Firm';
+    Caption='Investment Firm';
     DrillDownPageID = 50110;
     LookupPageID = 50110;
 
@@ -9,18 +8,15 @@ table 50110 "Investment Firm"
     {
         field(1;"No.";Code[20])
         {
-            CaptionML = DAN='Nr.',
-                        ENU='No.';
+            Caption='No.';
         }
         field(2;Name;Text[50])
         {
-            CaptionML = DAN='Navn',
-                        ENU='Name';
+            Caption='Name';
         }
         field(97;"No. Series";Code[10])
         {
-            CaptionML = DAN='Nummerserie',
-                        ENU='No. Series';
+            Caption='No. Series';
             Editable = false;
             TableRelation = "No. Series";
         }
@@ -29,8 +25,7 @@ table 50110 "Investment Firm"
     keys
     {
         key(Key1;"No.")
-        {
-        }
+        {}
         key(Key2;Name)
         {
             MaintainSQLIndex = false;
@@ -40,14 +35,13 @@ table 50110 "Investment Firm"
     fieldgroups
     {
         fieldgroup(DropDown;"No.",Name)
-        {
-        }
+        {}
     }
 
     trigger OnInsert();
     var
-        InvSetup : Record "50000";
-        NoSeriesMgt : Codeunit "396";
+        InvSetup : Record "Investment Setup";
+        NoSeriesMgt : Codeunit NoSeriesManagement;
     begin
         IF "No." = '' THEN BEGIN
           InvSetup.GET;

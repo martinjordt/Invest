@@ -1,4 +1,4 @@
-codeunit 50010 "Drop Area Mgt. Journal Line"
+codeunit 70110 "Drop Area Mgt. Journal Line"
 {
 
     trigger OnRun();
@@ -81,7 +81,7 @@ codeunit 50010 "Drop Area Mgt. Journal Line"
         FromMemoryStream.Write(Encoding.GetBytes(Data), 0, STRLEN(Data));
     end;
 
-    procedure FileDropEnd(var SecurityJnlLine : Record "50108");
+    procedure FileDropEnd(var SecurityJnlLine : Record "Security Journal Line");
     var
         ToMemoryStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.MemoryStream";
         FileStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.FileStream";
@@ -117,10 +117,10 @@ codeunit 50010 "Drop Area Mgt. Journal Line"
         EXIT(CurrentFilename);
     end;
 
-    procedure Download(SecurityJournalLine : Record "50108");
+    procedure Download(SecurityJournalLine : Record "Security Journal Line");
     var
-        FileMgt : Codeunit "419";
-        TempBlob : Record "99008535";
+        FileMgt : Codeunit "File Management";
+        TempBlob : Record "TempBlob";
     begin
         IF NOT SecurityJournalLine.Attachment.HASVALUE THEN
           EXIT;

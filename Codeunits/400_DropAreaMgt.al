@@ -1,5 +1,7 @@
-codeunit 50011 "Drop Area Mgt. Trade"
+codeunit 70400 "Drop Area Management"
 {
+    // version DropArea
+
 
     trigger OnRun();
     begin
@@ -8,8 +10,8 @@ codeunit 50011 "Drop Area Mgt. Trade"
     var
         ReadAsDataUrlHeader : Label 'data:';
         ProgressText : Label 'File upload in progress...\#1########################################\@2@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@';
-        FromMemoryStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.MemoryStream";
         CurrentFilename : Text;
+        FromMemoryStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.MemoryStream";
         FileDropInProgress : Boolean;
 
     procedure FromBase64Transform(var SourceMemoryStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.MemoryStream";var DestinationMemoryStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.MemoryStream") : Integer;
@@ -67,6 +69,7 @@ codeunit 50011 "Drop Area Mgt. Trade"
     begin
         FileDropInProgress := TRUE;
         CurrentFilename := Filename;
+
         FromMemoryStream := FromMemoryStream.MemoryStream();
     end;
 
@@ -81,22 +84,24 @@ codeunit 50011 "Drop Area Mgt. Trade"
         FromMemoryStream.Write(Encoding.GetBytes(Data), 0, STRLEN(Data));
     end;
 
-    procedure FileDropEnd(var SecurityTrade : Record "50102");
+    procedure FileDropEnd();
     var
         ToMemoryStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.MemoryStream";
         FileStream : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.FileStream";
         FileMode : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.FileMode";
         FileAccess : DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.FileAccess";
+        DropAreaFile : Record "50400";
         OStream : OutStream;
     begin
         ToMemoryStream := ToMemoryStream.MemoryStream();
 
         Base64Decode(FromMemoryStream, ToMemoryStream);
 
-        SecurityTrade."File Name" := CurrentFilename;;
-        SecurityTrade.Attachment.CREATEOUTSTREAM(OStream);
+        DropAreaFile."Entry No." := 0;
+        DropAreaFile."File Name" := CurrentFilename;
+        DropAreaFile."File Content".CREATEOUTSTREAM(OStream);
         ToMemoryStream.WriteTo(OStream);
-        SecurityTrade.MODIFY;
+        DropAreaFile.INSERT(TRUE);
 
         ToMemoryStream.Close();
         FromMemoryStream.Close();
@@ -117,17 +122,17 @@ codeunit 50011 "Drop Area Mgt. Trade"
         EXIT(CurrentFilename);
     end;
 
-    procedure Download(SecurityTrade : Record "50102");
+    procedure Download(DropAreaFile : Record "Drop Area File");
     var
-        FileMgt : Codeunit "419";
-        TempBlob : Record "99008535";
+        FileMgt : Codeunit "File Management";
+        TempBlob : Record "TempBlob";
     begin
-        IF NOT SecurityTrade.Attachment.HASVALUE THEN
+        IF NOT DropAreaFile."File Content".HASVALUE THEN
           EXIT;
 
-        SecurityTrade.CALCFIELDS(Attachment);
-        TempBlob.Blob := SecurityTrade.Attachment;
-        FileMgt.BLOBExport(TempBlob,SecurityTrade."File Name",TRUE);
+        DropAreaFile.CALCFIELDS("File Content");
+        TempBlob.Blob := DropAreaFile."File Content";
+        FileMgt.BLOBExport(TempBlob,DropAreaFile."File Name",TRUE);
     end;
 }
 

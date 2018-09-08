@@ -1,18 +1,16 @@
-page 50002 "Investment Activities"
+page 70102 "Investment Activities"
 {
-    CaptionML = DAN='Investeringsaktiviteter',
-                ENU='Investment Activities';
+    Caption='Investment Activities';
     PageType = CardPart;
-    SourceTable = Table50001;
+    SourceTable = "Investment Cue";
 
     layout
     {
         area(content)
         {
-            cuegroup(Depoter)
+            cuegroup(InvAcc)
             {
-                CaptionML = DAN='Depoter',
-                            ENU='Investment Accounts';
+                Caption='Investment Accounts';
                 field(Accounts;Accounts)
                 {
                     DrillDownPageID = "Account List";
@@ -21,23 +19,20 @@ page 50002 "Investment Activities"
 
                 actions
                 {
-                    action("Nyt depot")
+                    action("NewAccount")
                     {
-                        CaptionML = DAN='Nyt depot',
-                                    ENU='New Account';
+                        Caption='New Account';
                         RunObject = Page 50100;
                         RunPageMode = Create;
                     }
                 }
             }
-            cuegroup("Værdipapirer")
+            cuegroup(Securities)
             {
-                CaptionML = DAN='Værdipapirer',
-                            ENU='Securities';
+                Caption='Securities';
                 field(DanishStock;"DK Stock Securities")
                 {
-                    CaptionML = DAN='Danske aktier',
-                                ENU='Danish Stock';
+                    Caption='Danish Stock';
                     DrillDownPageID = "Security List";
                     Image = Cash;
 
@@ -48,8 +43,7 @@ page 50002 "Investment Activities"
                 }
                 field(DanishBond;"DK Bond Securities")
                 {
-                    CaptionML = DAN='Danske obligationer',
-                                ENU='Danish Bond';
+                    Caption='Danish Bond';
                     DrillDownPageID = "Security List";
                     Image = Cash;
 
@@ -60,8 +54,7 @@ page 50002 "Investment Activities"
                 }
                 field(ForignStock;"Forign Stock Securities")
                 {
-                    CaptionML = DAN='Globale aktier',
-                                ENU='Forign Stock';
+                    Caption='Forign Stock';
                     DrillDownPageID = "Security List";
                     Image = Cash;
 
@@ -72,8 +65,7 @@ page 50002 "Investment Activities"
                 }
                 field(ForignBond;"Forign Bond Securities")
                 {
-                    CaptionML = DAN='Globale obligationer',
-                                ENU='Forign Bond';
+                    Caption='Forign Bond';
                     DrillDownPageID = "Security List";
                     Image = Cash;
 
@@ -92,8 +84,7 @@ page 50002 "Investment Activities"
         {
             action("Set Up Cues")
             {
-                CaptionML = DAN='Konfigurer køindikatorer',
-                            ENU='Set Up Cues';
+                Caption='Set Up Cues';
                 Image = Setup;
 
                 trigger OnAction();
@@ -124,7 +115,7 @@ page 50002 "Investment Activities"
     end;
 
     var
-        CueSetup : Codeunit "9701";
+        CueSetup : Codeunit "Cue Setup";
 
     local procedure CalculateCueFieldValues();
     begin

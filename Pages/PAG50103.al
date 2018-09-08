@@ -59,7 +59,7 @@ page 50103 "Security Returns"
         {
             part(;50212)
             {
-                SubPageLink = Entry No.=FIELD(Entry No.);
+                SubPageLink = "Entry No."=FIELD("Entry No.");
                 SubPageView = SORTING(Date);
             }
         }

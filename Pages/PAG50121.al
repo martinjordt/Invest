@@ -90,17 +90,17 @@ page 50121 "Security List"
         {
             part(;50132)
             {
-                SubPageLink = Security No.=FIELD(No.);
+                SubPageLink = "Security No."=FIELD("No.");
             }
             part(;50131)
             {
-                SubPageLink = Account No.=FIELD(Account No.),
-                              Security No.=FIELD(No.);
+                SubPageLink = "Account No."=FIELD("Account No."),
+                              "Security No."=FIELD("No.");
             }
             part(;50130)
             {
-                SubPageLink = Account No.=FIELD(Account No.),
-                              Security No.=FIELD(No.);
+                SubPageLink = "Account No."=FIELD("Account No."),
+                              "Security No."=FIELD("No.");
             }
             systempart(;Links)
             {
@@ -171,8 +171,8 @@ page 50121 "Security List"
                     Promoted = true;
                     PromotedCategory = Category5;
                     RunObject = Page 50102;
-                    RunPageLink = Security No.=FIELD(No.),
-                                  Account No.=FIELD(Account No.);
+                    RunPageLink = "Security No."=FIELD("No."),
+                                  "Account No."=FIELD("Account No.");
                 }
                 action(Udbytte)
                 {
@@ -182,8 +182,8 @@ page 50121 "Security List"
                     Promoted = true;
                     PromotedCategory = Category5;
                     RunObject = Page 50103;
-                    RunPageLink = Security No.=FIELD(No.),
-                                  Account No.=FIELD(Account No.);
+                    RunPageLink = "Security No."=FIELD("No."),
+                                  "Account No."=FIELD("Account No.");
                 }
                 action(Kurser)
                 {
@@ -193,7 +193,7 @@ page 50121 "Security List"
                     Promoted = true;
                     PromotedCategory = Category5;
                     RunObject = Page 50104;
-                    RunPageLink = Security No.=FIELD(No.);
+                    RunPageLink = "Security No."=FIELD("No.");
                 }
             }
         }

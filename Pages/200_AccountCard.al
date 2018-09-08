@@ -1,11 +1,10 @@
-page 50100 "Account Card"
+page 70200 "Account Card"
 {
-    CaptionML = DAN='Depotkort',
-                ENU='Account Card';
+    Caption='Account Card';
     DeleteAllowed = false;
     PageType = Card;
     RefreshOnActivate = true;
-    SourceTable = Table50100;
+    SourceTable = "Account";
 
     layout
     {
@@ -39,10 +38,6 @@ page 50100 "Account Card"
                 }
             }
         }
-    }
-
-    actions
-    {
     }
 }
 

@@ -1,9 +1,8 @@
-page 50000 "Investment Setup"
+page 70100 "Investment Setup"
 {
-    CaptionML = DAN='Investeringsopsætning',
-                ENU='Investment Setup';
+    Caption = 'Investment Setup';
     PageType = Card;
-    SourceTable = Table50000;
+    SourceTable = "Investment Setup";
 
     layout
     {

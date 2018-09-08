@@ -1,4 +1,4 @@
-codeunit 50002 "Security Rate Chart Mgt."
+codeunit 70102 "Security Rate Chart Mgt."
 {
 
     trigger OnRun();
@@ -6,22 +6,22 @@ codeunit 50002 "Security Rate Chart Mgt."
     end;
 
     var
-        SecurityGlobal : Record "50101";
-        Text001 : TextConst DAN='Kurs',ENU='Rate';
-        Text002 : TextConst DAN='Dato',ENU='Date';
-        CalenderGlobal : Record "2000000007";
-        Text003 : TextConst DAN='Periodestart %1, Periodeslut: %2',ENU='Period Start %1, Period End: %2';
-        Text004 : TextConst DAN='Købskurs',ENU='Purchase Rate';
-        Text005 : TextConst DAN='Over købskurs',ENU='Overhead';
+        SecurityGlobal : Record Security;
+        CalenderGlobal : Record "Date";
+        Text001 : Label 'Rate';
+        Text002 : Label 'Date';
+        Text003 : Label 'Period Start %1, Period End: %2';
+        Text004 : Label 'Purchase Rate';
+        Text005 : Label 'Overhead';
 
-    procedure SetChartGlobal(Security : Record "50101");
+    procedure SetChartGlobal(Security : Record Security);
     begin
         SecurityGlobal := Security;
     end;
 
     procedure SetChartPeriod(MovePeriod : Option " ",Next,Previous;PeriodLength : Integer);
     var
-        GeneralFunctions : Codeunit "50005";
+        GeneralFunctions : Codeunit "General Functions";
         SearchText : Text;
     begin
         CASE MovePeriod OF
@@ -44,8 +44,8 @@ codeunit 50002 "Security Rate Chart Mgt."
 
     procedure UpdateChartData(var BusinessChartBuffer : Record "485";MovePeriod : Integer;PeriodLength : Integer);
     var
-        SecurityRate : Record "50104";
-        SecurityTrade : Record "50102";
+        SecurityRate : Record "Security Rate";
+        SecurityTrade : Record "Security Trade";
         Stack : Integer;
         MeanPurchRate : Decimal;
         PlusRate : Decimal;
@@ -78,14 +78,14 @@ codeunit 50002 "Security Rate Chart Mgt."
 
           // Loop through data
           SecurityRate.RESET;
-          SecurityRate.SETCURRENTKEY(Date);
+          SecurityRate.SETCURRENTKEY("Rate Date");
           SecurityRate.SETRANGE("Security No.",SecurityGlobal."No.");
-          SecurityRate.SETRANGE(Date,CalenderGlobal."Period Start",CalenderGlobal."Period End");
+          SecurityRate.SETRANGE("Rate Date",CalenderGlobal."Period Start",CalenderGlobal."Period End");
           IF SecurityRate.FINDSET THEN
             REPEAT
 
               // Make a column (X-Axic) for each data record
-              AddColumn(FORMAT(SecurityRate.Date));
+              AddColumn(FORMAT(SecurityRate."Rate Date"));
 
               PlusRate := 0;
               IF MeanPurchRate < SecurityRate.Rate THEN BEGIN

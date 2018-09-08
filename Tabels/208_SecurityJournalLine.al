@@ -1,43 +1,36 @@
-table 50108 "Security Journal Line"
+table 70208 "Security Journal Line"
 {
-    CaptionML = DAN='Værdipapirkladdelinje',
-                ENU='Security Journal Line';
+    Caption='Security Journal Line';
 
     fields
     {
         field(1;"Journal Template Name";Code[10])
         {
-            CaptionML = DAN='Kladdetypenavn',
-                        ENU='Journal Template Name';
+            Caption='Journal Template Name';
             TableRelation = "Gen. Journal Template";
         }
         field(2;"Line No.";Integer)
         {
-            CaptionML = DAN='Linjenr.',
-                        ENU='Line No.';
+            Caption='Line No.';
         }
         field(3;"Posting Date";Date)
         {
-            CaptionML = DAN='Bogføringsdato',
-                        ENU='Posting Date';
+            Caption='Posting Date';
         }
         field(5;"Entry Type";Option)
         {
-            CaptionML = DAN='Posttype',
-                        ENU='Entry Type';
-            OptionCaptionML = DAN='Værdipapirhandel,Værdipapirudbytte,Værdipapirkurs',
-                              ENU='Security Trade,Security Return,Security Rate';
+            Caption='Entry Type';
             OptionMembers = "Security Trade","Security Return","Security Rate";
+            OptionCaption='Security Trade,Security Return,Security Rate';            
         }
         field(7;"Security No.";Code[20])
         {
-            CaptionML = DAN='Værdipapir',
-                        ENU='Security No.';
+            Caption='Security No.';
             TableRelation = Security WHERE (Status=FILTER(Active|Inactive));
 
             trigger OnValidate();
             var
-                Security : Record "50101";
+                Security : Record Security;
             begin
                 IF "Security No." <> xRec."Security No." THEN BEGIN
                   "Security Name" := '';
@@ -72,17 +65,15 @@ table 50108 "Security Journal Line"
         }
         field(8;"Security Name";Text[80])
         {
-            CaptionML = DAN='Værdipapirnavn',
-                        ENU='Security Name';
+            Caption='Security Name';
         }
         field(9;"ISIN Code";Code[20])
         {
-            CaptionML = DAN='ISIN kode',
-                        ENU='ISIN Code';
+            Caption='ISIN Code';
 
             trigger OnValidate();
             var
-                Security : Record "50101";
+                Security : Record "Security";
             begin
                 IF "ISIN Code" <> xRec."ISIN Code" THEN
                   IF "ISIN Code" <> '' THEN BEGIN
@@ -100,61 +91,50 @@ table 50108 "Security Journal Line"
         }
         field(10;"Security Type";Option)
         {
-            CaptionML = DAN='Værdipapirtype',
-                        ENU='Security Type';
-            OptionCaptionML = DAN='Danske aktier,Globale aktier,Danske obligationer,Globale obligationer',
-                              ENU='Danish Stock,Forign Stock,Danish Bond,Forign Bond';
+            Caption='Security Type';
             OptionMembers = "Danish Stock","Forign Stock","Danish Bond","Forign Bond";
+            OptionCaption='Danish Stock,Forign Stock,Danish Bond,Forign Bond';            
         }
         field(11;Taxation;Option)
         {
-            CaptionML = DAN='Beskatning',
-                        ENU='Taxation';
-            OptionCaptionML = DAN='Realisation,Lager',
-                              ENU='Actual capital gain,Notional gain';
+            Caption='Taxation';        
             OptionMembers = "Actual capital gain","Notional gain";
+            OptionCaption='Actual capital gain,Notional gain';
         }
         field(12;"Investment Firm";Code[20])
         {
-            CaptionML = DAN='Investeringsselskab',
-                        ENU='Investment Firm';
+            Caption='Investment Firm';
             TableRelation = "Investment Firm";
         }
         field(13;"Investment Firm Name";Text[50])
         {
-            CalcFormula = Lookup("Investment Firm".Name WHERE (No.=FIELD(Investment Firm)));
-            CaptionML = DAN='Invest.selsk.navn',
-                        ENU='Investment Firm Name';
+            CalcFormula = Lookup("Investment Firm".Name WHERE ("No."=FIELD("Investment Firm")));
+            Caption='Investment Firm Name';
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "Investment Firm";
         }
         field(15;"Account No.";Text[30])
         {
-            CaptionML = DAN='Depotnr.',
-                        ENU='Account No.';
+            Caption='Account No.';
             TableRelation = Account;
         }
         field(16;"Account Name";Text[50])
         {
-            CalcFormula = Lookup(Account.Name WHERE (No.=FIELD(Account No.)));
-            CaptionML = DAN='Depotnavn',
-                        ENU='Account Name';
+            CalcFormula = Lookup(Account.Name WHERE ("No."=FIELD("Account No.")));
+            Caption='Account Name';
             Editable = false;
             FieldClass = FlowField;
         }
         field(19;"Trade Type";Option)
         {
-            CaptionML = DAN='Handelstype',
-                        ENU='Trade Type';
-            OptionCaptionML = DAN='Køb,Salg',
-                              ENU='Purchase,Sale';
+            Caption='Trade Type';
+            OptionCaption='Purchase,Sale';
             OptionMembers = Purchase,Sale;
         }
         field(20;"Share Price";Decimal)
         {
-            CaptionML = DAN='Aktuel kurs',
-                        ENU='Current Share Price';
+            Caption='Current Share Price';
 
             trigger OnValidate();
             begin
@@ -164,12 +144,11 @@ table 50108 "Security Journal Line"
         }
         field(21;"No. of Shares";Integer)
         {
-            CaptionML = DAN='Antal',
-                        ENU='No. of Shares';
+            Caption='No. of Shares';
 
             trigger OnValidate();
             var
-                Security : Record "50101";
+                Security : Record "Security";
             begin
                 IF ("Entry Type" = "Entry Type"::"Security Trade") AND
                   ("Trade Type" = "Trade Type"::Sale)
@@ -185,8 +164,7 @@ table 50108 "Security Journal Line"
         }
         field(23;"Trade Amount";Decimal)
         {
-            CaptionML = DAN='Handelsbeløb',
-                        ENU='Trade Amount';
+            Caption='Trade Amount';
 
             trigger OnValidate();
             begin
@@ -198,8 +176,7 @@ table 50108 "Security Journal Line"
         }
         field(24;"Gros Return Amount";Decimal)
         {
-            CaptionML = DAN='Brutto udbyttebeløb',
-                        ENU='Gros Return Amount';
+            Caption='Gros Return Amount';
 
             trigger OnValidate();
             begin
@@ -208,59 +185,50 @@ table 50108 "Security Journal Line"
         }
         field(25;"Net Return Amount";Decimal)
         {
-            CaptionML = DAN='Netto udbyttebeløb',
-                        ENU='Net Return Amount';
+            Caption='Net Return Amount';
         }
         field(27;"Share Gain/Loss";Decimal)
         {
-            CaptionML = DAN='Kurs gevinst/tab',
-                        ENU='Share Gain/Loss';
+            Caption='Share Gain/Loss';
             Editable = false;
         }
         field(29;"Bank Branch No.";Text[20])
         {
-            CalcFormula = Lookup(Account."Bank Branch No." WHERE (No.=FIELD(Account No.)));
-            CaptionML = DAN='Bankregistreringsnr.',
-                        ENU='Bank Branch No.';
+            CalcFormula = Lookup(Account."Bank Branch No." WHERE ("No."=FIELD("Account No.")));
+            Caption='Bank Branch No.';
             Editable = false;
             FieldClass = FlowField;
         }
         field(30;"Bank Account No.";Text[30])
         {
-            CalcFormula = Lookup(Account."Bank Account No." WHERE (No.=FIELD(Account No.)));
-            CaptionML = DAN='Bankkontonr.',
-                        ENU='Bank Account No.';
+            CalcFormula = Lookup(Account."Bank Account No." WHERE ("No."=FIELD("Account No.")));
+            Caption='Bank Account No.';
             Editable = false;
             FieldClass = FlowField;
         }
         field(50;"Disbursement Plan";Option)
         {
-            CaptionML = DAN='Afkastsplan',
-                        ENU='Disbursement Plan';
-            OptionCaptionML = DAN='Årlig,Halvårlig,Kvartal,Måned,,,Akkumulerende',
-                              ENU='Annualy,Half Yearly,Quarterly,Monthly,,,Accumulating';
+            Caption='Disbursement Plan';            
             OptionMembers = Annualy,"Half Yearly",Quarterly,Monthly,,,Accumulating;
+            OptionCaption='Annualy,Half Yearly,Quarterly,Monthly,,,Accumulating';
         }
         field(51;Risk;Integer)
         {
-            CaptionML = DAN='Risiko',
-                        ENU='Risk';
+            Caption='Risk';
             MaxValue = 6;
             MinValue = 1;
         }
         field(52;"Morning Star Rating";Integer)
         {
-            CaptionML = DAN='Morning Star Rating',
-                        ENU='Morning Star Rating';
+            Caption='Morning Star Rating';
             MaxValue = 6;
             MinValue = 1;
         }
         field(100;"Shortcut Dimension 1 Code";Code[20])
         {
             CaptionClass = '1,2,1';
-            CaptionML = DAN='Genvejsdimension 1-kode',
-                        ENU='Shortcut Dimension 1 Code';
-            TableRelation = "Dimension Value".Code WHERE (Global Dimension No.=CONST(1));
+            Caption='Shortcut Dimension 1 Code';
+            TableRelation = "Dimension Value".Code WHERE ("Global Dimension No."=CONST(1));
 
             trigger OnValidate();
             begin
@@ -270,9 +238,8 @@ table 50108 "Security Journal Line"
         field(101;"Shortcut Dimension 2 Code";Code[20])
         {
             CaptionClass = '1,2,2';
-            CaptionML = DAN='Genvejsdimension 2-kode',
-                        ENU='Shortcut Dimension 2 Code';
-            TableRelation = "Dimension Value".Code WHERE (Global Dimension No.=CONST(2));
+            Caption='Shortcut Dimension 2 Code';
+            TableRelation = "Dimension Value".Code WHERE ("Global Dimension No."=CONST(2));
 
             trigger OnValidate();
             begin
@@ -281,16 +248,15 @@ table 50108 "Security Journal Line"
         }
         field(200;Attachment;BLOB)
         {
-            CaptionML = DAN='Vedhæftning',
-                        ENU='Attachment';
+            Caption='Attachment';
         }
         field(201;"File Name";Text[250])
         {
+            Caption='File Name';
         }
         field(480;"Dimension Set ID";Integer)
         {
-            CaptionML = DAN='Dimensionsgruppe-id',
-                        ENU='Dimension Set ID';
+            Caption='Dimension Set ID';
             Editable = false;
             TableRelation = "Dimension Set Entry";
 
@@ -308,17 +274,13 @@ table 50108 "Security Journal Line"
         }
     }
 
-    fieldgroups
-    {
-    }
-
     var
-        SecJnlLine : Record "50108";
-        DimMgt : Codeunit "408";
-        Text001 : TextConst DAN='Anvend en linje med en vedhæftet fil',ENU='Please use a line with an Attachment';
-        Text002 : TextConst DAN='Du kan max. sælge %1 %2',ENU='You can only sell %1 %2';
+        SecJnlLine : Record "Security Journal Line";
+        DimMgt : Codeunit "DimensionManagement";
+        Text001 : label 'Please use a line with an Attachment';
+        Text002 : label 'You can only sell %1 %2';
 
-    procedure SetUpNewLine(LastSecJnlLine : Record "50108";EntryType : Integer);
+    procedure SetUpNewLine(LastSecJnlLine : Record "Security Journal Line";EntryType : Integer);
     begin
         SETRANGE("Entry Type",EntryType);
         "Entry Type" := EntryType;
@@ -392,7 +354,7 @@ table 50108 "Security Journal Line"
 
     procedure CalcBalance(var TotalBalance : Decimal;var Balance : Decimal);
     var
-        SecurityJournalLine : Record "50108";
+        SecurityJournalLine : Record "Security Journal Line";
         TradeAmt : Decimal;
     begin
         TradeAmt := 0;
@@ -435,7 +397,7 @@ table 50108 "Security Journal Line"
 
     local procedure CalcGainLoss();
     var
-        SecurityRate : Record "50104";
+        SecurityRate : Record "Security Rate";
         Diff : Decimal;
     begin
         IF ("Entry Type" <> "Entry Type"::"Security Rate") OR ("Share Price" = 0) THEN BEGIN
@@ -452,9 +414,9 @@ table 50108 "Security Journal Line"
         END;
     end;
 
-    procedure UseSameAttachment(SecurityJournalLine : Record "50108");
+    procedure UseSameAttachment(SecurityJournalLine : Record "Security Journal Line");
     var
-        SecurityJournalLine2 : Record "50108";
+        SecurityJournalLine2 : Record "Security Journal Line";
     begin
         SecurityJournalLine.SETRECFILTER;
         SecurityJournalLine.CALCFIELDS(Attachment);

@@ -1,65 +1,55 @@
-table 50001 "Investment Cue"
+table 70101 "Investment Cue"
 {
-    CaptionML = DAN='Investeringskøindikator',
-                ENU='Investment Cue';
+    Caption='Investment Cue';
 
     fields
     {
         field(1;"Primary Key";Code[10])
         {
-            CaptionML = DAN='Primærnøgle',
-                        ENU='Primary Key';
+            Caption='Primary Key';
         }
         field(2;Accounts;Decimal)
         {
-            CaptionML = DAN='Depoter',
-                        ENU='Accounts';
+            Caption='Accounts';
             Editable = false;
         }
         field(3;"DK Stock Securities";Decimal)
         {
-            CalcFormula = Sum(Security."Current Share Amt." WHERE (Security Type=CONST(Danish Stock)));
-            CaptionML = DAN='DK Aktier',
-                        ENU='DK Stock Securities';
+            CalcFormula = Sum(Security."Current Share Amt." WHERE ("Security Type"=CONST("Danish Stock")));
+            Caption='DK Stock Securities';
             Editable = false;
             FieldClass = FlowField;
         }
         field(4;"Forign Stock Securities";Decimal)
         {
-            CalcFormula = Sum(Security."Current Share Amt." WHERE (Security Type=CONST(Forign Stock)));
-            CaptionML = DAN='Globale aktier',
-                        ENU='Forign Stock Securities';
+            CalcFormula = Sum(Security."Current Share Amt." WHERE ("Security Type"=CONST("Forign Stock")));
+            Caption='Forign Stock Securities';
             Editable = false;
             FieldClass = FlowField;
         }
         field(5;"DK Bond Securities";Decimal)
         {
-            AccessByPermission = TableData 6650=R;
-            CalcFormula = Sum(Security."Current Share Amt." WHERE (Security Type=CONST(Danish Bond)));
-            CaptionML = DAN='DK Obligationer',
-                        ENU='DK Bond Securities';
+            CalcFormula = Sum(Security."Current Share Amt." WHERE ("Security Type"=CONST("Danish Bond")));
+            Caption='DK Bond Securities';
             Editable = false;
             FieldClass = FlowField;
         }
         field(6;"Forign Bond Securities";Decimal)
         {
-            CalcFormula = Sum(Security."Current Share Amt." WHERE (Security Type=CONST(Forign Bond)));
-            CaptionML = DAN='Globale obligationer',
-                        ENU='Forign Bond Securities';
+            CalcFormula = Sum(Security."Current Share Amt." WHERE ("Security Type"=CONST("Forign Bond")));
+            Caption='Forign Bond Securities';
             Editable = false;
             FieldClass = FlowField;
         }
         field(100;"Date Filter";Date)
         {
-            CaptionML = DAN='Datofilter',
-                        ENU='Date Filter';
+            Caption='Date Filter';
             Editable = false;
             FieldClass = FlowFilter;
         }
         field(101;"Account Filter";Text[30])
         {
-            CaptionML = DAN='Depotfilter',
-                        ENU='Account Filter';
+            Caption='Account Filter';
             FieldClass = FlowFilter;
         }
     }
@@ -67,17 +57,12 @@ table 50001 "Investment Cue"
     keys
     {
         key(Key1;"Primary Key")
-        {
-        }
-    }
-
-    fieldgroups
-    {
+        {        }
     }
 
     procedure CountSecurities(FieldNumber : Integer) : Decimal;
     var
-        Security : Record "50101";
+        Security : Record "Security";
     begin
         CASE FieldNumber OF
           FIELDNO(Accounts):
@@ -112,7 +97,7 @@ table 50001 "Investment Cue"
 
     procedure ShowSecurities(FieldNumber : Integer);
     var
-        Security : Record "50101";
+        Security : Record "Security";
     begin
         CASE FieldNumber OF
           FIELDNO("DK Stock Securities"):
@@ -137,4 +122,3 @@ table 50001 "Investment Cue"
         PAGE.RUN(PAGE::"Security List",Security);
     end;
 }
-

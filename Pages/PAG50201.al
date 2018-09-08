@@ -8,7 +8,7 @@ page 50201 "Security Journal Return"
     PromotedActionCategoriesML = DAN='Ny,Behandl',
                                  ENU='New,Process';
     SaveValues = true;
-    SourceTable = Table50108;
+    SourceTable = TableSecurity Journal Line;
     SourceTableView = WHERE(Entry Type=CONST(Security Return));
 
     layout

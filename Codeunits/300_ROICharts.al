@@ -1,4 +1,4 @@
-codeunit 50300 "ROI Charts"
+codeunit 70300 "ROI Charts"
 {
 
     trigger OnRun();
@@ -6,16 +6,16 @@ codeunit 50300 "ROI Charts"
     end;
 
     var
-        Text001 : TextConst DAN='Gns. ROI ÅTD',ENU='Avg. ROI YTD';
-        Text002 : TextConst DAN='Gns. ROI sidste år',ENU='Avg. ROI LY';
+        Text001 : Label 'Avg. ROI YTD';
+        Text002 : Label 'Avg. ROI LY';
+        Text003 : Label 'Risk rating %1';
         AvgROIAll_YTD : Decimal;
         AvgROIAll_LY : Decimal;
-        Text003 : TextConst DAN='Risikovurdering %1',ENU='Risk rating %1';
 
-    procedure UpdateChartDataType(var BusinessChartBuffer : Record "485");
+    procedure UpdateChartDataType(var BusinessChartBuffer : Record "Business Chart Buffer");
     var
-        InvestmentFirm : Record "50110";
-        SecurityReturn : Record "50103";
+        InvestmentFirm : Record "Investment Firm";
+        SecurityReturn : Record "Security Return";
         Stack : Integer;
         Counter : Integer;
         i : Integer;
@@ -28,8 +28,8 @@ codeunit 50300 "ROI Charts"
 
           // Calc ROI by Type & Firm
           SecurityReturn.RESET;
-          SecurityReturn.SETCURRENTKEY(Date);
-          SecurityReturn.SETRANGE(Date,CALCDATE('<CY+1D-1Y>',WORKDATE),CALCDATE('<CY>',WORKDATE));
+          SecurityReturn.SETCURRENTKEY("Posting Date");
+          SecurityReturn.SETRANGE("Posting Date",CALCDATE('<CY+1D-1Y>',WORKDATE),CALCDATE('<CY>',WORKDATE));
           FOR i := 1 TO 4 DO BEGIN  // Loop Types
             SecurityReturn.SETRANGE("Security Type",i-1);
             SecurityReturn.FINDFIRST;
@@ -66,10 +66,10 @@ codeunit 50300 "ROI Charts"
         END;
     end;
 
-    procedure UpdateChartDataRisk(var BusinessChartBuffer : Record "485");
+    procedure UpdateChartDataRisk(var BusinessChartBuffer : Record "Business Chart Buffer");
     var
-        InvestmentFirm : Record "50110";
-        SecurityReturn : Record "50103";
+        InvestmentFirm : Record "Investment Firm";
+        SecurityReturn : Record "Security Return";
         Stack : Integer;
         Counter : Integer;
         i : Integer;
@@ -82,8 +82,8 @@ codeunit 50300 "ROI Charts"
 
           // Calc ROI by Type & Firm
           SecurityReturn.RESET;
-          SecurityReturn.SETCURRENTKEY(Date);
-          SecurityReturn.SETRANGE(Date,CALCDATE('<CY+1D-1Y>',WORKDATE),CALCDATE('<CY>',WORKDATE));
+          SecurityReturn.SETCURRENTKEY("Posting Date");
+          SecurityReturn.SETRANGE("Posting Date",CALCDATE('<CY+1D-1Y>',WORKDATE),CALCDATE('<CY>',WORKDATE));
           FOR i := 1 TO 7 DO BEGIN  // Loop Risk
             SecurityReturn.SETRANGE(Risk,i);
             IF SecurityReturn.FINDFIRST THEN BEGIN
@@ -121,9 +121,9 @@ codeunit 50300 "ROI Charts"
         END;
     end;
 
-    local procedure InitChart(var BusinessChartBuffer : Record "485");
+    local procedure InitChart(var BusinessChartBuffer : Record "Business Chart Buffer");
     var
-        InvestmentFirm : Record "50110";
+        InvestmentFirm : Record "Investment Firm";
     begin
         WITH BusinessChartBuffer DO BEGIN
           Initialize;
@@ -148,7 +148,7 @@ codeunit 50300 "ROI Charts"
 
     local procedure CalcTotalAverages();
     var
-        SecurityReturn : Record "50103";
+        SecurityReturn : Record "Security Return";
         Counter : Integer;
     begin
         AvgROIAll_YTD := 0;
@@ -156,15 +156,15 @@ codeunit 50300 "ROI Charts"
 
         // Calc Average Total YTD
         CLEAR(SecurityReturn);
-        SecurityReturn.SETCURRENTKEY(Date);
-        SecurityReturn.SETRANGE(Date,CALCDATE('<CY+1D-1Y>',WORKDATE),CALCDATE('<CY>',WORKDATE));
+        SecurityReturn.SETCURRENTKEY("Posting Date");
+        SecurityReturn.SETRANGE("Posting Date",CALCDATE('<CY+1D-1Y>',WORKDATE),CALCDATE('<CY>',WORKDATE));
         SecurityReturn.CALCSUMS("ROI Gross");
         Counter := SecurityReturn.COUNT;
         IF Counter > 0 THEN
           AvgROIAll_YTD := SecurityReturn."ROI Gross" * 1000 / Counter;
 
         // Calc Average Total LY
-        SecurityReturn.SETRANGE(Date,CALCDATE('<CY+1D-2Y>',WORKDATE),CALCDATE('<CY-1Y>',WORKDATE));
+        SecurityReturn.SETRANGE("Posting Date",CALCDATE('<CY+1D-2Y>',WORKDATE),CALCDATE('<CY-1Y>',WORKDATE));
         SecurityReturn.CALCSUMS("ROI Gross");
         Counter := SecurityReturn.COUNT;
         IF Counter > 0 THEN

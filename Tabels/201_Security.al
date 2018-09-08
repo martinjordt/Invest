@@ -1,7 +1,6 @@
-table 50101 Security
+table 70201 Security
 {
-    CaptionML = DAN='Værdipapir',
-                ENU='Security';
+    Caption='Security';
     DrillDownPageID = 50121;
     LookupPageID = 50121;
 
@@ -9,13 +8,11 @@ table 50101 Security
     {
         field(1;"No.";Code[20])
         {
-            CaptionML = DAN='Kode',
-                        ENU='Code';
+            Caption='Code';
         }
         field(2;Name;Text[80])
         {
-            CaptionML = DAN='Navn',
-                        ENU='Name';
+            Caption='Name';
 
             trigger OnValidate();
             begin
@@ -25,235 +22,197 @@ table 50101 Security
         }
         field(3;"Search Name";Text[80])
         {
-            CaptionML = DAN='Søgenavn',
-                        ENU='Search Name';
+            Caption='Search Name';
         }
         field(5;"ISIN Code";Text[30])
         {
-            CaptionML = DAN='ISIN kode',
-                        ENU='ISIN Code';
+            Caption='ISIN Code';
         }
         field(9;Status;Option)
         {
-            CaptionML = DAN='Status',
-                        ENU='Status';
-            OptionCaptionML = DAN='Aktiv,Inaktiv,Ignorer',
-                              ENU='Active,Inactive,Ignore';
+            Caption='Status';            
             OptionMembers = Active,Inactive,Ignore;
+            OptionCaption = 'Active,Inactive,Ignore';
         }
         field(10;"Security Type";Option)
         {
-            CaptionML = DAN='Værdipapirtype',
-                        ENU='Security Type';
-            OptionCaptionML = DAN='Danske aktier,Globale aktier,Danske obligationer,Globale obligationer',
-                              ENU='Danish Stock,Forign Stock,Danish Bond,Forign Bond';
+            Caption='Security Type';
             OptionMembers = "Danish Stock","Forign Stock","Danish Bond","Forign Bond";
+            OptionCaption='Danish Stock,Forign Stock,Danish Bond,Forign Bond';
         }
         field(11;Taxation;Option)
         {
-            CaptionML = DAN='Beskatning',
-                        ENU='Taxation';
-            OptionCaptionML = DAN='Realisation,Lager',
-                              ENU='Actual capital gain,Notional gain';
+            Caption='Taxation';            
             OptionMembers = "Actual capital gain","Notional gain";
+            OptionCaption='Actual capital gain,Notional gain';
         }
         field(12;"Investment Firm";Code[20])
         {
-            CaptionML = DAN='Investeringsselskab',
-                        ENU='Investment Firm';
+            Caption='Investment Firm';
             TableRelation = "Investment Firm";
         }
         field(13;Risk;Integer)
         {
-            CaptionML = DAN='Risiko',
-                        ENU='Risk';
+            Caption='Risk';
             MaxValue = 7;
             MinValue = 1;
         }
         field(14;"Morning Star Rating";Integer)
         {
-            CaptionML = DAN='Morning Star Rating',
-                        ENU='Morning Star Rating';
+            Caption='Morning Star Rating';
             MaxValue = 5;
             MinValue = 1;
         }
         field(15;"Account No.";Text[30])
         {
-            CaptionML = DAN='Depotnr.',
-                        ENU='Account No.';
+            Caption='Account No.';
             TableRelation = Account;
         }
         field(16;"Account Name";Text[30])
         {
-            CalcFormula = Lookup(Account.Name WHERE (No.=FIELD(Account No.)));
-            CaptionML = DAN='Depotnavn',
-                        ENU='Account Name';
+            Caption='Account Name';
+            CalcFormula = Lookup(Account.Name WHERE ("No."=FIELD("Account No.")));            
             Editable = false;
             FieldClass = FlowField;
         }
         field(17;"Bank Account No.";Text[30])
         {
-            CalcFormula = Lookup(Account."Bank Account No." WHERE (No.=FIELD(Account No.)));
-            CaptionML = DAN='Bankkontonr.',
-                        ENU='Bank Account No.';
+            Caption='Bank Account No.';
+            CalcFormula = Lookup(Account."Bank Account No." WHERE ("No."=FIELD("Account No.")));            
             Editable = false;
             FieldClass = FlowField;
         }
         field(19;"Investment Firm Name";Text[50])
         {
-            CalcFormula = Lookup("Investment Firm".Name WHERE (No.=FIELD(Investment Firm)));
-            CaptionML = DAN='Invest.selsk.navn',
-                        ENU='Investment Firm Name';
+            Caption='Investment Firm Name';
+            CalcFormula = Lookup("Investment Firm".Name WHERE ("No."=FIELD("Investment Firm")));            
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "Investment Firm";
         }
         field(20;"Current Share Rate";Decimal)
         {
-            CaptionML = DAN='Aktuel kurs',
-                        ENU='Current Share Rate';
+            Caption='Current Share Rate';
             Editable = false;
         }
         field(21;"No. of Shares";Integer)
         {
-            CalcFormula = Sum("Security Trade"."No. of Shares" WHERE (Account No.=FIELD(Account No.),
-                                                                      Security No.=FIELD(No.)));
-            CaptionML = DAN='Antal',
-                        ENU='No. of Shares';
+            Caption='No. of Shares';
+            CalcFormula = Sum("Security Trade"."No. of Shares" WHERE ("Account No."=FIELD("Account No."),
+                                                                      "Security No."=FIELD("No.")));            
             Editable = false;
             FieldClass = FlowField;
         }
         field(22;"Current Share Amt.";Decimal)
         {
-            CaptionML = DAN='Aktuel værdi',
-                        ENU='Current Share Amt.';
+            Caption='Current Share Amt.';
             Editable = false;
         }
         field(23;"Current Profit/Loss";Decimal)
         {
-            CaptionML = DAN='Aktuel gevinst/tab',
-                        ENU='Current Profit/Loss';
+            Caption='Current Profit/Loss';
             Editable = false;
         }
         field(30;"Total Purchase Amt.";Decimal)
         {
-            CalcFormula = Sum("Security Trade"."Trade Amount" WHERE (Security No.=FIELD(No.),
-                                                                     Entry Type=CONST(Purchase)));
-            CaptionML = DAN='Købsbeløb',
-                        ENU='Total Purchase Amt.';
+            Caption='Total Purchase Amt.';
+            CalcFormula = Sum("Security Trade"."Trade Amount" WHERE ("Security No."=FIELD("No."),
+                                                                     "Entry Type"=CONST(Purchase)));            
             Editable = false;
             FieldClass = FlowField;
         }
         field(40;"Total Sales Amt.";Decimal)
         {
-            CalcFormula = Sum("Security Trade"."Trade Amount" WHERE (Security No.=FIELD(No.),
-                                                                     Entry Type=CONST(Sale)));
-            CaptionML = DAN='Salgsbeløb',
-                        ENU='Total Sales Amt.';
+            Caption='Total Sales Amt.';
+            CalcFormula = Sum("Security Trade"."Trade Amount" WHERE ("Security No."=FIELD("No."),
+                                                                     "Entry Type"=CONST(Sale)));            
             Editable = false;
             FieldClass = FlowField;
         }
         field(41;"Realised Profit/Loss";Decimal)
         {
-            CaptionML = DAN='Realiseret gevinst/tab',
-                        ENU='Realised Profit/Loss';
+            Caption='Realised Profit/Loss';
             Editable = false;
         }
         field(50;"Return Plan";Option)
         {
-            CaptionML = DAN='Afkastsplan',
-                        ENU='Disbursement Plan';
-            OptionCaptionML = DAN='Årlig,Halvårlig,Kvartal,Måned,,,Akkumulerende',
-                              ENU='Annualy,Half Yearly,Quarterly,Monthly,,,Accumulating';
+            Caption='Disbursement Plan';            
             OptionMembers = Annualy,"Half Yearly",Quarterly,Monthly,,,Accumulating;
+            OptionCaption='Annualy,Half Yearly,Quarterly,Monthly,,,Accumulating';
         }
         field(51;"Last Return Date";Date)
         {
-            CalcFormula = Max("Security Return".Date WHERE (Security No.=FIELD(No.)));
-            CaptionML = DAN='Sidste udbyttedato',
-                        ENU='Last Return Date';
+            Caption='Last Return Date';
+            CalcFormula = Max("Security Return".Date WHERE ("Security No."=FIELD("No.")));            
             Editable = false;
             FieldClass = FlowField;
         }
         field(52;"Last Return Amt.";Decimal)
         {
-            CaptionML = DAN='Sidste udbytte',
-                        ENU='Last Return Amt.';
+            Caption='Last Return Amt.';
             Editable = false;
         }
         field(53;"Return Amt. YTD";Decimal)
         {
-            CaptionML = DAN='Udbytte ÅTD',
-                        ENU='Return Amount YTD';
+            Caption='Return Amount YTD';
             Editable = false;
         }
         field(54;"Return Amt. LY";Decimal)
         {
-            CaptionML = DAN='Udbytte sidste år',
-                        ENU='Return Amount LY';
+            Caption='Return Amount LY';
             Editable = false;
         }
         field(55;"Total Return Amt.";Decimal)
         {
-            CalcFormula = Sum("Security Return"."Gros Return Amount" WHERE (Security No.=FIELD(No.)));
-            CaptionML = DAN='Udbytte i alt',
-                        ENU='Total Return Amt.';
+            Caption='Total Return Amt.';
+            CalcFormula = Sum("Security Return"."Gros Return Amount" WHERE ("Security No."=FIELD("No.")));            
             Editable = false;
             FieldClass = FlowField;
         }
         field(60;"Last ROI per 1000";Decimal)
         {
-            CaptionML = DAN='Sidste ROI per 1000',
-                        ENU='Last ROI per 1000';
+            Caption='Last ROI per 1000';
             Editable = false;
         }
         field(61;"ROI YTD per 1000";Decimal)
         {
-            CaptionML = DAN='ROI ÅTD per 1000',
-                        ENU='ROI YTD per 1000';
+            Caption='ROI YTD per 1000';
             Editable = false;
         }
         field(62;"ROI LY per 1000";Decimal)
         {
-            CaptionML = DAN='ROI sidste år per 1000',
-                        ENU='ROI LY per 1000';
+            Caption='ROI LY per 1000';
             Editable = false;
         }
         field(63;"Avgr. ROI per Y per 1000";Decimal)
         {
-            CaptionML = DAN='Gns. ROI per år per 1000',
-                        ENU='Avgr. ROI per Y per 1000';
+            Caption='Avgr. ROI per Y per 1000';
             Editable = false;
         }
         field(64;"Total ROI per 1000";Decimal)
         {
-            CaptionML = DAN='Total ROI per 1000',
-                        ENU='Total ROI per 1000';
+            Caption='Total ROI per 1000';
             Editable = false;
         }
         field(70;"Share Gain/Loss Latest";Decimal)
         {
-            CaptionML = DAN='Kurs gevinst seneste/tab',
-                        ENU='Share Gain/Loss Latest';
+            Caption='Share Gain/Loss Latest';
             Editable = false;
         }
         field(71;"Share Gain/Loss Overall";Decimal)
         {
-            CaptionML = DAN='Kurs gevinst/tab i alt',
-                        ENU='Share Gain/Loss Overall';
+            Caption='Share Gain/Loss Overall';
             Editable = false;
         }
         field(97;"No. Series";Code[10])
         {
-            CaptionML = DAN='Nummerserie',
-                        ENU='No. Series';
+            Caption='No. Series';
             Editable = false;
             TableRelation = "No. Series";
         }
         field(100;"Date Filter";Date)
         {
-            CaptionML = DAN='Datofilter',
-                        ENU='Date Filter';
+            Caption='Date Filter';
             FieldClass = FlowFilter;
         }
     }
@@ -261,8 +220,7 @@ table 50101 Security
     keys
     {
         key(Key1;"No.")
-        {
-        }
+        {}
         key(Key2;Name)
         {
             MaintainSQLIndex = false;
@@ -276,8 +234,7 @@ table 50101 Security
     fieldgroups
     {
         fieldgroup(DropDown;"No.",Name,"Investment Firm","Account No.")
-        {
-        }
+        {}
     }
 
     trigger OnDelete();
@@ -288,8 +245,8 @@ table 50101 Security
 
     trigger OnInsert();
     var
-        InvSetup : Record "50000";
-        NoSeriesMgt : Codeunit "396";
+        InvSetup : Record "investment setup";
+        NoSeriesMgt : Codeunit "NoSeriesManagement";
     begin
         IF "No." = '' THEN BEGIN
           InvSetup.GET;
@@ -300,7 +257,7 @@ table 50101 Security
 
     procedure BuySell();
     var
-        SecurityJournalLine : Record "50108";
+        SecurityJournalLine : Record "Security Journal Line";
         NextLineNo : Integer;
     begin
         NextLineNo := 10000;
@@ -323,7 +280,7 @@ table 50101 Security
 
     procedure RegisterReturn();
     var
-        SecurityJournalLine : Record "50108";
+        SecurityJournalLine : Record "Security Journal Line";
         NextLineNo : Integer;
     begin
         NextLineNo := 10000;
@@ -346,7 +303,7 @@ table 50101 Security
 
     procedure UpdateRate();
     var
-        SecurityJournalLine : Record "50108";
+        SecurityJournalLine : Record "Security Journal Line";
         NextLineNo : Integer;
     begin
         NextLineNo := 10000;
@@ -367,7 +324,7 @@ table 50101 Security
         PAGE.RUNMODAL(PAGE::"Security Journal Rate");
     end;
 
-    local procedure InitSecurityJnlLine(var SecurityJournalLine : Record "50108";NextLineNo : Integer);
+    local procedure InitSecurityJnlLine(var SecurityJournalLine : Record "Security Journal Line";NextLineNo : Integer);
     begin
         CLEAR(SecurityJournalLine);
         SecurityJournalLine."Line No." := NextLineNo;

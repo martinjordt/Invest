@@ -1,7 +1,6 @@
-table 50103 "Security Return"
+table 70203 "Security Return"
 {
-    CaptionML = DAN='Værdipapirudbytte',
-                ENU='Security Return';
+    Caption='Security Return';
     DrillDownPageID = 50103;
     LookupPageID = 50103;
 
@@ -11,71 +10,59 @@ table 50103 "Security Return"
         {
             AutoIncrement = true;
         }
-        field(2;Date;Date)
+        field(2;"Posting Date";Date)
         {
-            CaptionML = DAN='Dato',
-                        ENU='Date';
+            Caption='Posting Date';
         }
         field(4;"Account No.";Text[30])
         {
-            CaptionML = DAN='Depotnr.',
-                        ENU='Account No.';
+            Caption='Account No.';
             TableRelation = Account;
         }
         field(5;"Security No.";Code[10])
         {
-            CaptionML = DAN='Værdipapirnummer',
-                        ENU='Security No.';
+            Caption='Security No.';
             TableRelation = Security;
         }
         field(6;"Security Type";Option)
         {
-            CaptionML = DAN='Værdipapirtype',
-                        ENU='Security Type';
-            OptionCaptionML = DAN='Danske aktier,Globale aktier,Danske obligationer,Globale obligationer',
-                              ENU='Danish Stock,Forign Stock,Danish Bond,Forign Bond';
+            Caption='Security Type';            
             OptionMembers = "Danish Stock","Forign Stock","Danish Bond","Forign Bond";
+            OptionCaption='Danish Stock,Forign Stock,Danish Bond,Forign Bond';
         }
         field(7;Risk;Integer)
         {
-            CaptionML = DAN='Risiko',
-                        ENU='Risk';
+            Caption='Risk';
             MaxValue = 7;
             MinValue = 1;
         }
         field(8;"Security Name";Text[80])
         {
-            CalcFormula = Lookup(Security.Name WHERE (No.=FIELD(Security No.)));
-            CaptionML = DAN='Værdipapirnavn',
-                        ENU='Security Name';
+            CalcFormula = Lookup(Security.Name WHERE ("No."=FIELD("Security No.")));
+            Caption='Security Name';
             Editable = false;
             FieldClass = FlowField;
         }
         field(9;"Investment Firm";Code[20])
         {
-            CaptionML = DAN='Investeringsselskab',
-                        ENU='Investment Firm';
+            Caption='Investment Firm';
             TableRelation = "Investment Firm";
         }
         field(10;"ISIN Code";Text[20])
         {
-            CaptionML = DAN='ISIN kode',
-                        ENU='ISIN Code';
+            Caption='ISIN Code';
         }
         field(11;"Gros Return Amount";Decimal)
         {
-            CaptionML = DAN='Brutto udbyttebeløb',
-                        ENU='Gros Return Amount';
+            Caption='Gros Return Amount';
         }
         field(12;"Net Return Amount";Decimal)
         {
-            CaptionML = DAN='Netto udbyttebeløb',
-                        ENU='Net Return Amount';
+            Caption='Net Return Amount';
         }
         field(13;"No. of Shares";Integer)
         {
-            CaptionML = DAN='Antal',
-                        ENU='No. of Shares';
+            Caption='No. of Shares';
 
             trigger OnValidate();
             begin
@@ -84,28 +71,23 @@ table 50103 "Security Return"
         }
         field(14;"Return pr Share Gross";Decimal)
         {
-            CaptionML = DAN='Udbytte pr stk. brutto',
-                        ENU='Return pr Share Gross';
+            Caption='Return pr Share Gross';
         }
         field(15;"Return pr Share Net";Decimal)
         {
-            CaptionML = DAN='Udbytte pr stk. netto',
-                        ENU='Return pr Share Net';
+            Caption='Return pr Share Net';
         }
         field(20;"ROI Gross";Decimal)
         {
-            CaptionML = DAN='ROI Brutto',
-                        ENU='ROI Gross';
+            Caption='ROI Gross';
         }
         field(21;"ROI Net";Decimal)
         {
-            CaptionML = DAN='ROI Netto',
-                        ENU='ROI Net';
+            Caption='ROI Net';
         }
         field(200;Attachment;BLOB)
         {
-            CaptionML = DAN='Vedhæftning',
-                        ENU='Attachment';
+            Caption='Attachment';
         }
         field(201;"File Name";Text[250])
         {
@@ -115,22 +97,16 @@ table 50103 "Security Return"
     keys
     {
         key(Key1;"Entry No.")
-        {
-        }
-        key(Key2;Date)
-        {
-        }
-    }
-
-    fieldgroups
-    {
+        {}
+        key(Key2;"Posting Date")
+        {}
     }
 
     procedure Calculate();
     var
-        SecurityRate : Record "50104";
+        SecurityRate : Record "Security Rate";
     begin
-        TESTFIELD(Date);
+        TESTFIELD("Posting Date");
         TESTFIELD("Gros Return Amount");
         TESTFIELD("Net Return Amount");
         TESTFIELD("No. of Shares");
@@ -141,11 +117,11 @@ table 50103 "Security Return"
 
         // Return pr invested amount
         SecurityRate.RESET;
-        SecurityRate.SETCURRENTKEY(Date);
+        SecurityRate.SETCURRENTKEY("Rate Date");
         SecurityRate.SETRANGE("Security No.","Security No.");
-        SecurityRate.SETFILTER(Date,'<=%1',Date);
+        SecurityRate.SETFILTER("Rate Date",'<=%1',"Posting Date");
         IF NOT SecurityRate.FINDLAST THEN BEGIN
-          SecurityRate.SETRANGE(Date);
+          SecurityRate.SETRANGE("Rate Date");
           SecurityRate.FINDFIRST;
         END;
 

@@ -1,13 +1,13 @@
-codeunit 50005 "General Functions"
+codeunit 70105 "General Functions"
 {
 
     trigger OnRun();
     begin
     end;
 
-    procedure FindDate(SearchString : Text[3];var Calendar : Record "2000000007";PeriodType : Option Year,Year2,Year3,Year4,Year5) : Boolean;
+    procedure FindDate(SearchString : Text[3];var Calendar : Record "Date";PeriodType : Option Year,Year2,Year3,Year4,Year5) : Boolean;
     var
-        Calendar2 : Record "2000000007";
+        Calendar2 : Record "Date";
         Found : Boolean;
     begin
         Calendar.SETRANGE("Period Type",Calendar."Period Type"::Year);

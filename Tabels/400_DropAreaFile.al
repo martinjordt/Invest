@@ -1,7 +1,6 @@
-table 50400 "Drop Area File"
+table 70400 "Drop Area File"
 {
     // version DropArea
-
 
     fields
     {
