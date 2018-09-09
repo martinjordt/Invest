@@ -1,19 +1,18 @@
-page 50132 "Security FactBox - Rate"
+page 70232 "Security FactBox - Rate"
 {
-    CaptionML = DAN='Kurser',
-                ENU='Rates';
+    Caption='Rates';
     PageType = CardPart;
-    SourceTable = Table50104;
-    SourceTableView = SORTING(Date)
+    SourceTable = "Security Rate";
+    SourceTableView = SORTING("Rate Date")
                       ORDER(Descending);
 
     layout
     {
         area(content)
         {
-            repeater()
+            repeater(Lines)
             {
-                field(Date;Date)
+                field("Rate Date";"Rate Date")
                 {
                 }
                 field(Type;Type)
@@ -24,10 +23,6 @@ page 50132 "Security FactBox - Rate"
                 }
             }
         }
-    }
-
-    actions
-    {
     }
 }
 

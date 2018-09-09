@@ -1,13 +1,12 @@
-page 50400 "Drop Area"
+page 70263 "Security Rate - Drop Area"
 {
-    // version DropArea
-
+    Caption='File Drag and Drop';
     DeleteAllowed = false;
     InsertAllowed = false;
     ModifyAllowed = false;
     PageType = CardPart;
-    SourceTable = Table50400;
-    SourceTableView = SORTING(Entry No.);
+    SourceTable = "Security Journal Line";
+    SourceTableView = SORTING("Journal Template Name","Line No.");
 
     layout
     {
@@ -31,7 +30,7 @@ page 50400 "Drop Area"
     end;
 
     var
-        DropAreaMgt : Codeunit "50400";
+        DropAreaMgt : Codeunit "Drop Area Mgt. Rate";
 
     //event DropArea();
     //begin
@@ -59,7 +58,7 @@ page 50400 "Drop Area"
     //event DropArea();
     //begin
         /*
-        DropAreaMgt.FileDropEnd();
+        DropAreaMgt.FileDropEnd(Rec);
         CurrPage.UPDATE(FALSE);
         */
     //end;

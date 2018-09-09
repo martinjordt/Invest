@@ -1,11 +1,10 @@
-page 50120 "Account List"
+page 70220 "Account List"
 {
-    CaptionML = DAN='Depoter',
-                ENU='Account List';
+    Caption='Account List';
     CardPageID = "Account Card";
     Editable = false;
     PageType = List;
-    SourceTable = Table50100;
+    SourceTable = "Account";
 
     layout
     {
@@ -30,8 +29,7 @@ page 50120 "Account List"
                 }
                 field("Current Profit/Loss";"Current Profit/Loss")
                 {
-                    CaptionML = DAN='Gevinst/Tab',
-                                ENU='Profit/Loss';
+                    Caption='Profit/Loss';
                     Editable = false;
                 }
                 field("Security Return YTD";"Security Return YTD")
@@ -39,10 +37,6 @@ page 50120 "Account List"
                 }
             }
         }
-    }
-
-    actions
-    {
     }
 }
 

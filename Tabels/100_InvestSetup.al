@@ -11,17 +11,17 @@ table 70100 "Investment Setup"
         field(10;"Account Nos.";Code[10])
         {
             Caption='Account Nos.';            
-            TableRelation = "No. Series";
+        //    TableRelation = "No. Series";
         }
         field(11;"Security Nos.";Code[10])
         {
-            Caption='Security Nos.';
-            TableRelation = "No. Series";
+            Caption='Security Nos.';            
+//            TableRelation = "No. Series";
         }
         field(12;"Invest. Firm Nos.";Code[10])
         {
             Caption='Invest. Firm Nos.';
-            TableRelation = "No. Series";
+          //  TableRelation = "No. Series";
         }
         field(20;"Import folder - Rates";Text[100])
         {

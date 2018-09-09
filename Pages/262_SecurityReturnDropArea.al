@@ -1,13 +1,12 @@
-page 50210 "Security Jnl. - Drop Area"
+page 70262 "Security Return - Drop Area"
 {
-    CaptionML = DAN='Fil træk-slip',
-                ENU='File Drag and Drop';
+    Caption='File Drag and Drop';
     DeleteAllowed = false;
     InsertAllowed = false;
     ModifyAllowed = false;
     PageType = CardPart;
-    SourceTable = TableSecurity Journal Line;
-    SourceTableView = SORTING(Journal Template Name,Line No.);
+    SourceTable = "Security Return";
+    SourceTableView = SORTING("Posting Date");
 
     layout
     {
@@ -31,7 +30,7 @@ page 50210 "Security Jnl. - Drop Area"
     end;
 
     var
-        DropAreaMgt : Codeunit "50010";
+        DropAreaMgt : Codeunit "Drop Area Mgt. Return";
 
     //event DropArea();
     //begin

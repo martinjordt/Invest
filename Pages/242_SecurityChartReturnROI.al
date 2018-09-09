@@ -1,11 +1,10 @@
-page 50141 "Security Chart - Rate"
+page 70242 "Security Chart - Return ROI"
 {
     // Copy of P773
 
-    CaptionML = DAN='Værdipapir udbytte',
-                ENU='Security Return';
+    Caption='Security Return';
     PageType = CardPart;
-    SourceTable = Table485;
+    SourceTable = "Business Chart Buffer";
 
     layout
     {
@@ -14,21 +13,17 @@ page 50141 "Security Chart - Rate"
             field(StatusText;StatusText)
             {
                 ApplicationArea = Basic,Suite;
-                CaptionML = DAN='Statustekst',
-                            ENU='Status Text';
+                Caption='Status Text';
                 ShowCaption = false;
-                ToolTipML = DAN='Angiver diagrammets status.',
-                            ENU='Specifies the status of the chart.';
+                ToolTip='Specifies the status of the chart.';
             }
             field(BusinessChart;'')
             {
                 ApplicationArea = Basic,Suite;
-                CaptionML = DAN='Virksomhedsdiagram',
-                            ENU='Business Chart';
+                Caption='Business Chart';
                 //The property ControlAddIn is not yet supported. Please convert manually.
                 //ControlAddIn = 'Microsoft.Dynamics.Nav.Client.BusinessChart;PublicKeyToken=31bf3856ad364e35';
-                ToolTipML = DAN='Angiver, om diagrammet er af typen Virksomhedsdiagram.',
-                            ENU='Specifies if the chart is of type Business Chart.';
+                ToolTip='Specifies if the chart is of type Business Chart.';
             }
         }
     }
@@ -39,13 +34,11 @@ page 50141 "Security Chart - Rate"
         {
             group(Periode)
             {
-                CaptionML = DAN='Periode',
-                            ENU='Period';
+                Caption='Period';
                 Image = Period;
                 action(Year)
                 {
-                    CaptionML = DAN='År',
-                                ENU='Year';
+                    Caption='Year';
 
                     trigger OnAction();
                     var
@@ -57,8 +50,7 @@ page 50141 "Security Chart - Rate"
                 }
                 action("2Years")
                 {
-                    CaptionML = DAN='2 År',
-                                ENU='2 Years';
+                    Caption='2 Years';
 
                     trigger OnAction();
                     var
@@ -70,8 +62,7 @@ page 50141 "Security Chart - Rate"
                 }
                 action("3Years")
                 {
-                    CaptionML = DAN='3 År',
-                                ENU='3 Years';
+                    Caption='3 Years';
 
                     trigger OnAction();
                     var
@@ -83,8 +74,7 @@ page 50141 "Security Chart - Rate"
                 }
                 action("4Years")
                 {
-                    CaptionML = DAN='4 År',
-                                ENU='4 Years';
+                    Caption='4 Years';
 
                     trigger OnAction();
                     var
@@ -96,8 +86,7 @@ page 50141 "Security Chart - Rate"
                 }
                 action("5Years")
                 {
-                    CaptionML = DAN='5 År',
-                                ENU='5 Years';
+                    Caption='5 Years';
 
                     trigger OnAction();
                     var
@@ -111,11 +100,9 @@ page 50141 "Security Chart - Rate"
             action(PrevPeriod)
             {
                 ApplicationArea = RelationshipMgmt;
-                CaptionML = DAN='Forrige periode',
-                            ENU='Previous Period';
+                Caption='Previous Period';
                 Image = PreviousRecord;
-                ToolTipML = DAN='Vis oplysningerne baseret på den forrige periode. Hvis du indstiller feltet Vis efter til Dag, skifter datofilteret til dagen før.',
-                            ENU='Show the information based on the previous period. If you set the View by field to Day, the date filter changes to the day before.';
+                ToolTip='Show the information based on the previous period. If you set the View by field to Day, the date filter changes to the day before.';
 
                 trigger OnAction();
                 var
@@ -127,11 +114,9 @@ page 50141 "Security Chart - Rate"
             action(NextPeriod)
             {
                 ApplicationArea = RelationshipMgmt;
-                CaptionML = DAN='Næste periode',
-                            ENU='Next Period';
+                Caption='Next Period';
                 Image = NextRecord;
-                ToolTipML = DAN='Få vist den næste periode.',
-                            ENU='View the next period.';
+                ToolTip='View the next period.';
 
                 trigger OnAction();
                 var
@@ -145,25 +130,25 @@ page 50141 "Security Chart - Rate"
 
     var
         SecurityGlobal : Record Security;
-        SecurityRateChartMgt : Codeunit "50002";
+        SecurityReturnChartMgt : Codeunit "Security Return Chart Mgt. ROI";
         StatusText : Text[250];
-        Text001 : TextConst DAN='Periode',ENU='Period';
+        Text001 :  Label 'Period';
         Period : Option " ",Next,Previous;
         PeriodLength : Option Year,Year2,Year3,Year4,Year5;
 
     procedure UpdateChart(MovePeriod : Option " ",Next,Previous);
     begin
-        SecurityRateChartMgt.SetChartGlobal(SecurityGlobal);
-        SecurityRateChartMgt.UpdateChartData(Rec,MovePeriod,PeriodLength);
+        SecurityReturnChartMgt.SetChartGlobal(SecurityGlobal);
+        SecurityReturnChartMgt.UpdateChartData(Rec,MovePeriod,PeriodLength);
         Update(CurrPage.BusinessChart);
 
-        StatusText := SecurityRateChartMgt.GetChartStatusText;
+        StatusText := SecurityReturnChartMgt.GetChartStatusText;
     end;
 
     procedure SetGlobal(Security : Record Security);
     begin
         SecurityGlobal := Security;
-        SecurityRateChartMgt.SetChartGlobal(SecurityGlobal);
+        SecurityReturnChartMgt.SetChartGlobal(SecurityGlobal);
         PeriodLength := PeriodLength::Year5;
     end;
 

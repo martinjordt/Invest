@@ -1,19 +1,18 @@
-page 50130 "Security FactBox - Trade"
+page 70230 "Security FactBox - Trade"
 {
-    CaptionML = DAN='Handler',
-                ENU='Trades';
+    Caption='Trades';
     PageType = CardPart;
-    SourceTable = Table50102;
-    SourceTableView = SORTING(Date)
+    SourceTable = "Security Trade";
+    SourceTableView = SORTING("Posting Date")
                       ORDER(Ascending);
 
     layout
     {
         area(content)
         {
-            repeater()
+            repeater(Lines)
             {
-                field(Date;Date)
+                field("Posting Date";"Posting Date")
                 {
                 }
                 field("Entry Type";"Entry Type")
@@ -38,10 +37,6 @@ page 50130 "Security FactBox - Trade"
                 }
             }
         }
-    }
-
-    actions
-    {
     }
 }
 

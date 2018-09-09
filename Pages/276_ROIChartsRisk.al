@@ -1,11 +1,10 @@
-page 50303 "ROI Charts - Risk"
+page 70276 "ROI Charts - Risk"
 {
     // Copy of P773
 
-    CaptionML = DAN='Værdipapir udbytte',
-                ENU='Security Return';
+    Caption='Security Return';
     PageType = CardPart;
-    SourceTable = Table485;
+    SourceTable = "Business Chart Buffer";
 
     layout
     {
@@ -14,12 +13,10 @@ page 50303 "ROI Charts - Risk"
             field(BusinessChart;'')
             {
                 ApplicationArea = Basic,Suite;
-                CaptionML = DAN='Virksomhedsdiagram',
-                            ENU='Business Chart';
+                Caption='Business Chart';
                 //The property ControlAddIn is not yet supported. Please convert manually.
                 //ControlAddIn = 'Microsoft.Dynamics.Nav.Client.BusinessChart;PublicKeyToken=31bf3856ad364e35';
-                ToolTipML = DAN='Angiver, om diagrammet er af typen Virksomhedsdiagram.',
-                            ENU='Specifies if the chart is of type Business Chart.';
+                ToolTip='Specifies if the chart is of type Business Chart.';
             }
         }
     }
@@ -29,8 +26,8 @@ page 50303 "ROI Charts - Risk"
     }
 
     var
-        ROICharts : Codeunit "50300";
-        Text001 : TextConst DAN='Periode',ENU='Period';
+        ROICharts : Codeunit "ROI Charts";
+        Text001 : label 'Period';
 
     procedure UpdateChart();
     begin

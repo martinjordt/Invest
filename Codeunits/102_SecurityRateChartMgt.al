@@ -42,7 +42,7 @@ codeunit 70102 "Security Rate Chart Mgt."
         EXIT(STRSUBSTNO(Text003,CalenderGlobal."Period Start",CalenderGlobal."Period End"));
     end;
 
-    procedure UpdateChartData(var BusinessChartBuffer : Record "485";MovePeriod : Integer;PeriodLength : Integer);
+    procedure UpdateChartData(var BusinessChartBuffer : Record "Business Chart Buffer";MovePeriod : Integer;PeriodLength : Integer);
     var
         SecurityRate : Record "Security Rate";
         SecurityTrade : Record "Security Trade";

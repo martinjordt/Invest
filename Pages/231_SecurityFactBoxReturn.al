@@ -1,19 +1,18 @@
-page 50131 "Security FactBox - Return"
+page 70231 "Security FactBox - Return"
 {
-    CaptionML = DAN='Udbytte',
-                ENU='Returns';
+    Caption='Returns';
     PageType = CardPart;
-    SourceTable = Table50103;
-    SourceTableView = SORTING(Date)
+    SourceTable = "Security Return";
+    SourceTableView = SORTING("Posting Date")
                       ORDER(Descending);
 
     layout
     {
         area(content)
         {
-            repeater()
+            repeater(Lines)
             {
-                field(Date;Date)
+                field("Posting Date";"Posting Date")
                 {
                 }
                 field("No. of Shares";"No. of Shares")
@@ -24,10 +23,6 @@ page 50131 "Security FactBox - Return"
                 }
             }
         }
-    }
-
-    actions
-    {
     }
 }
 

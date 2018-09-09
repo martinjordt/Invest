@@ -1,4 +1,4 @@
-codeunit 70106 "Security Functions"
+codeunit 70106 "Security Function Mgt."
 {
 
     trigger OnRun();

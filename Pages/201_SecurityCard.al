@@ -41,7 +41,7 @@ page 70201 "Security Card"
                 group(Rating)
                 {
                     Caption='Ratings';
-                    grid()
+                    grid(ratinggrid)
                     {
                         GridLayout = Rows;
                         group(RiskGrp)
@@ -79,10 +79,10 @@ page 70201 "Security Card"
                 group(Handel)
                 {
                     Caption='Trade';
-                    grid()
+                    grid(tradegrid)
                     {
                         GridLayout = Rows;
-                        group()
+                        group(tradegrp)
                         {
                             field("Total Purchase Amt.";"Total Purchase Amt.")
                             {
@@ -99,10 +99,10 @@ page 70201 "Security Card"
                 group(ValueGrp)
                 {
                     Caption='Value';
-                    grid()
+                    grid(valuegrid)
                     {
                         GridLayout = Rows;
-                        group()
+                        group(valuegrp2)
                         {
                             field("Current Share Rate";"Current Share Rate")
                             {
@@ -122,10 +122,10 @@ page 70201 "Security Card"
                 group(ReturnGrp)
                 {
                     Caption='Returns';
-                    grid(GridGrp)
+                    grid(ReturnGridGrp)
                     {
                         GridLayout = Rows;
-                        group(ReturnGrpRows)
+                        group(ReturnGrpGrp2)
                         {
                             field("Last Return Date";"Last Return Date")
                             {

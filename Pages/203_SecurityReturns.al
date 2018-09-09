@@ -1,11 +1,10 @@
-page 50103 "Security Returns"
+page 70203 "Security Returns"
 {
-    CaptionML = DAN='Værdipapirudbetalinger',
-                ENU='Security Returns';
+    Caption='Security Returns';
     Editable = false;
     PageType = List;
-    SourceTable = Table50103;
-    SourceTableView = SORTING(Date)
+    SourceTable = "Security Return";
+    SourceTableView = SORTING("Posting Date")
                       ORDER(Descending);
 
     layout
@@ -16,11 +15,10 @@ page 50103 "Security Returns"
             {
                 field(HasAttachment;HasAttachment)
                 {
-                    CaptionML = DAN='Vedhæftet fil',
-                                ENU='Has Attachemnt';
+                    Caption='Has Attachemnt';
                     Editable = false;
                 }
-                field(Date;Date)
+                field(Date;"Posting Date")
                 {
                 }
                 field("Account No.";"Account No.")
@@ -60,7 +58,7 @@ page 50103 "Security Returns"
             part(;50212)
             {
                 SubPageLink = "Entry No."=FIELD("Entry No.");
-                SubPageView = SORTING(Date);
+                SubPageView = SORTING("posting date");
             }
         }
     }
@@ -69,10 +67,9 @@ page 50103 "Security Returns"
     {
         area(processing)
         {
-            action("Åben vedhæftning")
+            action(OpenAttachment)
             {
-                CaptionML = DAN='Åben vedhæftning',
-                            ENU='Open Attachment';
+                Caption='Open Attachment';
                 Image = ExportFile;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -80,7 +77,7 @@ page 50103 "Security Returns"
 
                 trigger OnAction();
                 var
-                    DropAreaMgt : Codeunit "50012";
+                    DropAreaMgt : Codeunit "Drop Area Mgt. Return";
                 begin
                     DropAreaMgt.Download(Rec);
                 end;

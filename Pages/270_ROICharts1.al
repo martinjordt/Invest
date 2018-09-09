@@ -1,7 +1,6 @@
-page 50300 "ROI Charts 1"
+page 70270 "ROI Charts 1"
 {
-    CaptionML = DAN='ROI Grafer',
-                ENU='ROI Charts';
+    Caption='ROI Charts';
     PageType = List;
 
     layout
@@ -10,13 +9,11 @@ page 50300 "ROI Charts 1"
         {
             part(ROI_SecurityType;50302)
             {
-                CaptionML = DAN='ROI - Værdipapir - Type',
-                            ENU='ROI - Security - Type';
+                Caption='ROI - Security - Type';
             }
             part(ROI_SecurityRisk;50303)
             {
-                CaptionML = DAN='ROI - Værdipapir - Risiko',
-                            ENU='ROI - Security - Risk';
+                Caption='ROI - Security - Risk';
             }
         }
     }

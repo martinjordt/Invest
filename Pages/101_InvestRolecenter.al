@@ -7,9 +7,9 @@ page 70101 "Investment Rolecenter"
     {
         area(rolecenter)
         {
-            group()
+            group(rolecentergrp)
             {
-                part(;50002)
+                part(InvestmentActivities;"Investment Activities")
                 {
                 }
             }
@@ -20,20 +20,20 @@ page 70101 "Investment Rolecenter"
     {
         area(embedding)
         {
-            group(Poster)
+            group(EntryGrp)
             {
                 Caption='Entries';
-                action(Handler)
+                action(Trade)
                 {
                     Caption='Trades';
                     RunObject = Page 50102;
                 }
-                action(Udbytte)
+                action(Return)
                 {
                     Caption='Returns';
                     RunObject = Page 50103;
                 }
-                action(Kurser)
+                action(Rate)
                 {
                     Caption='Rates';
                     RunObject = Page 50104;
@@ -41,7 +41,7 @@ page 70101 "Investment Rolecenter"
             }
             group()
             {
-                action("ROI Grafer")
+                action("ROIChart")
                 {
                     Caption='ROI Charts';
                     RunObject = Page 50300;
@@ -50,7 +50,7 @@ page 70101 "Investment Rolecenter"
         }
         area(processing)
         {
-            group(Opgaver)
+            group(Task)
             {
                 Caption='Tasks';
                 action("BuySell")

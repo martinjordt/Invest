@@ -1,13 +1,13 @@
-page 50211 "Security Trade - Drop Area"
+page 70400 "Drop Area"
 {
-    CaptionML = DAN='Fil træk-slip',
-                ENU='File Drag and Drop';
+    // version DropArea
+
     DeleteAllowed = false;
     InsertAllowed = false;
     ModifyAllowed = false;
     PageType = CardPart;
-    SourceTable = Table50102;
-    SourceTableView = SORTING(Date);
+    SourceTable = "Drop Area File";
+    SourceTableView = SORTING("Entry No.");
 
     layout
     {
@@ -31,7 +31,7 @@ page 50211 "Security Trade - Drop Area"
     end;
 
     var
-        DropAreaMgt : Codeunit "50011";
+        DropAreaMgt : Codeunit "Drop Area Management";
 
     //event DropArea();
     //begin
@@ -59,7 +59,7 @@ page 50211 "Security Trade - Drop Area"
     //event DropArea();
     //begin
         /*
-        DropAreaMgt.FileDropEnd(Rec);
+        DropAreaMgt.FileDropEnd();
         CurrPage.UPDATE(FALSE);
         */
     //end;

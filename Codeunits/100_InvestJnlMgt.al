@@ -1,4 +1,4 @@
-codeunit 70100 InvestJnlMgt
+codeunit 70100 "Invest Jnl. Mgt."
 {
     TableNo = "Security Journal Line";
 
@@ -35,7 +35,7 @@ codeunit 70100 InvestJnlMgt
     var
         Security : Record Security;
         SecurityJournalLine2 : Record "Security Journal Line";
-        SecurityFunctions : Codeunit "50006";
+        SecurityFunctions : Codeunit "Security Function Mgt.";
     begin
         // Post line
         CASE SecurityJournalLine."Entry Type" OF
@@ -50,7 +50,7 @@ codeunit 70100 InvestJnlMgt
         END;
 
         // Calculate Security KPI values
-        Security.GET(SecurityJournalLine."Security No.");
+        Security.GET(SecurityJournalLine."Security No.");        
         SecurityFunctions.SecurityKPI(Security);
         Security.MODIFY;
 

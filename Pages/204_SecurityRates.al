@@ -1,11 +1,10 @@
-page 50104 "Security Rates"
+page 70204 "Security Rates"
 {
-    CaptionML = DAN='Værdipapirkurser',
-                ENU='Security Rates';
+    Caption='Security Rates';
     Editable = false;
     PageType = List;
-    SourceTable = Table50104;
-    SourceTableView = SORTING(Date)
+    SourceTable = "Security Rate";
+    SourceTableView = SORTING("Rate Date")
                       ORDER(Descending);
 
     layout
@@ -14,7 +13,7 @@ page 50104 "Security Rates"
         {
             repeater(Group)
             {
-                field(Date;Date)
+                field("rate date";"Rate Date")
                 {
                 }
                 field("ISIN Code";"ISIN Code")
@@ -31,10 +30,6 @@ page 50104 "Security Rates"
                 }
             }
         }
-    }
-
-    actions
-    {
     }
 }
 

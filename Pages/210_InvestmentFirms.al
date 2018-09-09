@@ -1,9 +1,8 @@
-page 50110 "Investment Firms"
+page 70210 "Investment Firms"
 {
-    CaptionML = DAN='Investeringsselskaber',
-                ENU='Investment Firms';
+    Caption='Investment Firms';
     PageType = List;
-    SourceTable = Table50110;
+    SourceTable = "Investment Firm";
 
     layout
     {
@@ -19,10 +18,6 @@ page 50110 "Investment Firms"
                 }
             }
         }
-    }
-
-    actions
-    {
     }
 }
 

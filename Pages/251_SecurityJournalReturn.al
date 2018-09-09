@@ -1,15 +1,13 @@
-page 50200 "Security Journal Trade"
+page 70251 "Security Journal Return"
 {
     AutoSplitKey = true;
-    CaptionML = DAN='Investeringskladde',
-                ENU='Investment Journal';
+    Caption='Security Journal Return';
     DelayedInsert = true;
     PageType = Worksheet;
-    PromotedActionCategoriesML = DAN='Ny,Behandl',
-                                 ENU='New,Process';
+    PromotedActionCategories='New,Process';
     SaveValues = true;
-    SourceTable = TableSecurity Journal Line;
-    SourceTableView = WHERE(Entry Type=CONST(Security Trade));
+    SourceTable = "Security Journal Line";
+    SourceTableView = WHERE("Entry Type"=CONST("Security Return"));
 
     layout
     {
@@ -19,16 +17,14 @@ page 50200 "Security Journal Trade"
             {
                 field(HasAttachment;HasAttachment)
                 {
-                    CaptionML = DAN='Vedhæftet fil',
-                                ENU='Has Attachemnt';
+                    Caption='Has Attachemnt';
                     Editable = false;
                 }
                 field("Posting Date";"Posting Date")
                 {
                     ApplicationArea = Basic,Suite;
                     StyleExpr = StyleTxt;
-                    ToolTipML = DAN='Angiver bogføringsdatoen for posten.',
-                                ENU='Specifies the posting date for the entry.';
+                    ToolTip='Specifies the posting date for the entry.';
                 }
                 field("Account No.";"Account No.")
                 {
@@ -36,46 +32,31 @@ page 50200 "Security Journal Trade"
                 field("Account Name";"Account Name")
                 {
                 }
-                field("Trade Type";"Trade Type")
-                {
-                }
-                field("Investment Firm";"Investment Firm")
-                {
-                }
-                field("Investment Firm Name";"Investment Firm Name")
-                {
-                }
                 field("Security No.";"Security No.")
                 {
                 }
                 field("Security Name";"Security Name")
                 {
+                    Editable = false;
                 }
                 field("ISIN Code";"ISIN Code")
                 {
+                    Editable = false;
                 }
                 field("Security Type";"Security Type")
                 {
-                }
-                field(Taxation;Taxation)
-                {
-                }
-                field("Disbursement Plan";"Disbursement Plan")
-                {
-                }
-                field(Risk;Risk)
-                {
-                }
-                field("Morning Star Rating";"Morning Star Rating")
-                {
+                    Editable = false;
                 }
                 field("No. of Shares";"No. of Shares")
                 {
                 }
-                field("Share Price";"Share Price")
+                field("Gros Return Amount";"Gros Return Amount")
                 {
                 }
-                field("Trade Amount";"Trade Amount")
+                field("Net Return Amount";"Net Return Amount")
+                {
+                }
+                field("Investment Firm Name";"Investment Firm Name")
                 {
                 }
                 field("Bank Branch No.";"Bank Branch No.")
@@ -87,22 +68,20 @@ page 50200 "Security Journal Trade"
                 field("Shortcut Dimension 1 Code";"Shortcut Dimension 1 Code")
                 {
                     ApplicationArea = Suite;
-                    ToolTipML = DAN='Angiver koden for Genvejsdimension 1.',
-                                ENU='Specifies the code for Shortcut Dimension 1.';
+                    ToolTip='Specifies the code for Shortcut Dimension 1.';
                     Visible = false;
                 }
                 field("Shortcut Dimension 2 Code";"Shortcut Dimension 2 Code")
                 {
                     ApplicationArea = Suite;
-                    ToolTipML = DAN='Angiver koden for Genvejsdimension 2.',
-                                ENU='Specifies the code for Shortcut Dimension 2.';
+                    ToolTip='Specifies the code for Shortcut Dimension 2.';
                     Visible = false;
                 }
                 field(ShortcutDimCode[3];ShortcutDimCode[3])
                 {
                     CaptionClass = '1,2,3';
-                    TableRelation = "Dimension Value".Code WHERE (Global Dimension No.=CONST(3),
-                                                                  Dimension Value Type=CONST(Standard),
+                    TableRelation = "Dimension Value".Code WHERE ("Global Dimension No."=CONST(3),
+                                                                  "Dimension Value Type"=CONST(Standard),
                                                                   Blocked=CONST(No));
                     Visible = false;
 
@@ -114,8 +93,8 @@ page 50200 "Security Journal Trade"
                 field(ShortcutDimCode[4];ShortcutDimCode[4])
                 {
                     CaptionClass = '1,2,4';
-                    TableRelation = "Dimension Value".Code WHERE (Global Dimension No.=CONST(4),
-                                                                  Dimension Value Type=CONST(Standard),
+                    TableRelation = "Dimension Value".Code WHERE ("Global Dimension No."=CONST(4),
+                                                                  "Dimension Value Type"=CONST(Standard),
                                                                   Blocked=CONST(No));
                     Visible = false;
 
@@ -127,8 +106,8 @@ page 50200 "Security Journal Trade"
                 field(ShortcutDimCode[5];ShortcutDimCode[5])
                 {
                     CaptionClass = '1,2,5';
-                    TableRelation = "Dimension Value".Code WHERE (Global Dimension No.=CONST(5),
-                                                                  Dimension Value Type=CONST(Standard),
+                    TableRelation = "Dimension Value".Code WHERE ("Global Dimension No."=CONST(5),
+                                                                  "Dimension Value Type"=CONST(Standard),
                                                                   Blocked=CONST(No));
                     Visible = false;
 
@@ -140,8 +119,8 @@ page 50200 "Security Journal Trade"
                 field(ShortcutDimCode[6];ShortcutDimCode[6])
                 {
                     CaptionClass = '1,2,6';
-                    TableRelation = "Dimension Value".Code WHERE (Global Dimension No.=CONST(6),
-                                                                  Dimension Value Type=CONST(Standard),
+                    TableRelation = "Dimension Value".Code WHERE ("Global Dimension No."=CONST(6),
+                                                                  "Dimension Value Type"=CONST(Standard),
                                                                   Blocked=CONST(No));
                     Visible = false;
 
@@ -153,8 +132,8 @@ page 50200 "Security Journal Trade"
                 field(ShortcutDimCode[7];ShortcutDimCode[7])
                 {
                     CaptionClass = '1,2,7';
-                    TableRelation = "Dimension Value".Code WHERE (Global Dimension No.=CONST(7),
-                                                                  Dimension Value Type=CONST(Standard),
+                    TableRelation = "Dimension Value".Code WHERE ("Global Dimension No."=CONST(7),
+                                                                  "Dimension Value Type"=CONST(Standard),
                                                                   Blocked=CONST(No));
                     Visible = false;
 
@@ -166,8 +145,8 @@ page 50200 "Security Journal Trade"
                 field(ShortcutDimCode[8];ShortcutDimCode[8])
                 {
                     CaptionClass = '1,2,8';
-                    TableRelation = "Dimension Value".Code WHERE (Global Dimension No.=CONST(8),
-                                                                  Dimension Value Type=CONST(Standard),
+                    TableRelation = "Dimension Value".Code WHERE ("Global Dimension No."=CONST(8),
+                                                                  "Dimension Value Type"=CONST(Standard),
                                                                   Blocked=CONST(No));
                     Visible = false;
 
@@ -181,47 +160,39 @@ page 50200 "Security Journal Trade"
             {
                 fixed()
                 {
-                    group("Inv.selsk.navn")
+                    group(InvFirm)
                     {
-                        CaptionML = DAN='Inv.selsk.navn',
-                                    ENU='Inv. Firm Name';
+                        Caption='Inv. Firm Name';
                         field(AccName;AccName)
                         {
                             ApplicationArea = Basic,Suite;
                             Editable = false;
                             ShowCaption = false;
-                            ToolTipML = DAN='Angiver navnet på depotet.',
-                                        ENU='Specifies the name of the account.';
+                            ToolTip='Specifies the name of the account.';
                         }
                     }
-                    group(Saldo)
+                    group(Bal)
                     {
-                        CaptionML = DAN='Saldo',
-                                    ENU='Balance';
+                        Caption='Balance';
                         field(Balance;Balance)
                         {
                             ApplicationArea = All;
                             AutoFormatType = 1;
-                            CaptionML = DAN='Saldo',
-                                        ENU='Balance';
+                            Caption='Balance';
                             Editable = false;
-                            ToolTipML = DAN='Angiver den saldo, der er akkumuleret for investeringsselskabet',
-                                        ENU='Specifies the balance that has accumulated for the investmentfirm.';
+                            ToolTip='Specifies the balance that has accumulated for the investmentfirm.';
                         }
                     }
-                    group("Total balance")
+                    group(TotalBal)
                     {
-                        CaptionML = DAN='Total balance',
-                                    ENU='Total Balance';
+                        Caption='Total Balance';
                         field(TotalBalance;TotalBalance)
                         {
                             ApplicationArea = All;
                             AutoFormatType = 1;
-                            CaptionML = DAN='Total balance',
-                                        ENU='Total Balance';
+                            Caption='Total Balance';
                             Editable = false;
-                            ToolTipML = DAN='Viser den totale saldo i kladden.',
-                                        ENU='Specifies the total balance in the journal.';
+                            ToolTip='Specifies the total balance in the journal.';
                         }
                     }
                 }
@@ -231,20 +202,20 @@ page 50200 "Security Journal Trade"
         {
             part(;50210)
             {
-                SubPageLink = Journal Template Name=FIELD(Journal Template Name),
-                              Line No.=FIELD(Line No.);
-                SubPageView = SORTING(Journal Template Name,Line No.);
+                SubPageLink = "Journal Template Name"=FIELD("Journal Template Name"),
+                              "Line No."=FIELD("Line No.");
+                SubPageView = SORTING("Journal Template Name","Line No.");
             }
             part(;699)
             {
                 ApplicationArea = Basic,Suite;
-                SubPageLink = Dimension Set ID=FIELD(Dimension Set ID);
+                SubPageLink = "Dimension Set ID"=FIELD("Dimension Set ID");
             }
-            systempart(;Links)
+            systempart(Links;Links)
             {
                 Visible = false;
             }
-            systempart(;Notes)
+            systempart(Notes;Notes)
             {
                 Visible = false;
             }
@@ -255,27 +226,38 @@ page 50200 "Security Journal Trade"
     {
         area(processing)
         {
-            group("Fu&nktion")
+            group("Funktion")
             {
-                CaptionML = DAN='Fu&nktion',
-                            ENU='F&unctions';
+                Caption='Functions';
                 Image = "Action";
                 action(Post)
                 {
                     ApplicationArea = Basic,Suite;
-                    CaptionML = DAN='B&ogfør',
-                                ENU='P&ost';
+                    Caption='Post';
                     Image = PostOrder;
                     Promoted = true;
                     PromotedCategory = Process;
                     PromotedIsBig = true;
                     ShortCutKey = 'F9';
-                    ToolTipML = DAN='Færdiggør bilaget eller kladden ved at bogføre beløb og antal på de relaterede konti i regnskaberne.',
-                                ENU='Finalize the document or journal by posting the amounts and quantities to the related accounts in your company books.';
+                    ToolTip='Finalize the document or journal by posting the amounts and quantities to the related accounts in your company books.';
 
                     trigger OnAction();
                     begin
-                        CODEUNIT.RUN(CODEUNIT::InvestJnlMgt,Rec);
+                        CODEUNIT.RUN(CODEUNIT::"Investment Jnl. Mgt.",Rec);
+                        CurrPage.UPDATE(FALSE);
+                    end;
+                }
+                action(Attachment)
+                {
+                    Caption='Use Same Attachment';
+                    Image = ExportAttachment;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    PromotedIsBig = true;
+
+                    trigger OnAction();
+                    begin
+                        UseSameAttachment(Rec);
                         CurrPage.UPDATE(FALSE);
                     end;
                 }
@@ -300,7 +282,7 @@ page 50200 "Security Journal Trade"
 
     trigger OnNewRecord(BelowxRec : Boolean);
     begin
-        SetUpNewLine(xRec,0);
+        SetUpNewLine(xRec,1);
         CLEAR(ShortcutDimCode);
         CLEAR(AccName);
         HasAttachment := FALSE;
@@ -312,15 +294,15 @@ page 50200 "Security Journal Trade"
     end;
 
     var
-        SecJnlManagement : Codeunit "50000";
+        InvestJnlMgt : Codeunit "Investment Jnl. Mgt.";
         AccName : Text[50];
         Balance : Decimal;
         TotalBalance : Decimal;
         ShortcutDimCode : array [8] of Code[20];
-        Text000 : TextConst DAN='Der er indsat finanskladdelinjer fra standardfinanskladden %1.',ENU='General Journal lines have been successfully inserted from Standard General Journal %1.';
-        Text001 : TextConst DAN='Standardfinanskladden %1 er oprettet.',ENU='Standard General Journal %1 has been successfully created.';
+        Text000 : label 'General Journal lines have been successfully inserted from Standard General Journal %1.';
+        Text001 : label 'Standard General Journal %1 has been successfully created.';
         StyleTxt : Text;
-        AccTypeNotSupportedErr : TextConst DAN='Du kan ikke angive en periodiseringskode for denne kontotype.',ENU='You cannot specify a deferral code for this type of account.';
+        AccTypeNotSupportedErr : label 'You cannot specify a deferral code for this type of account.';
         HasAttachment : Boolean;
 }
 

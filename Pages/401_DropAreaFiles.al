@@ -1,9 +1,9 @@
-page 50401 "Drop Area Files"
+page 70401 "Drop Area Files"
 {
     // version DropArea
 
     PageType = List;
-    SourceTable = Table50400;
+    SourceTable = "Drop Area File";
 
     layout
     {
@@ -25,10 +25,10 @@ page 50401 "Drop Area Files"
         }
         area(factboxes)
         {
-            part(;50400)
+            part(DropArea;"Drop Area")
             {
                 SubPageLink = "Entry No."=FIELD("Entry No.");
-                SubPageView = SORTING(Entry No.);
+                SubPageView = SORTING("Entry No.");
             }
         }
     }
@@ -54,6 +54,6 @@ page 50401 "Drop Area Files"
     }
 
     var
-        DropAreaMgt : Codeunit "50400";
+        DropAreaMgt : Codeunit "Drop Area Management";
 }
 

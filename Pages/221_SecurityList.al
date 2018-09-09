@@ -1,14 +1,12 @@
-page 50121 "Security List"
+page 70221 "Security List"
 {
-    CaptionML = DAN='Værdipapire',
-                ENU='Security List';
+    Caption='Security List';
     CardPageID = "Security Card";
     DeleteAllowed = false;
     Editable = false;
     PageType = List;
-    PromotedActionCategoriesML = DAN='Ny,Behandl,Rapportér,Værdipapir,Poster',
-                                 ENU='New,Process,Report,Security,Entries';
-    SourceTable = Table50101;
+    PromotedActionCategories='New,Process,Report,Security,Entries';
+    SourceTable = Security;
     SourceTableView = SORTING(Status)
                       WHERE(Status=FILTER(Active|Inactive));
 
@@ -74,14 +72,12 @@ page 50121 "Security List"
                 }
                 field(GainLoss1;GainLoss1)
                 {
-                    CaptionML = DAN='Gevinst/Tab senest',
-                                ENU='Gain/Loss Latest';
+                    Caption='Gain/Loss Latest';
                     StyleExpr = StyleExprVar2;
                 }
                 field(GainLoss2;GainLoss2)
                 {
-                    CaptionML = DAN='Gevinst/Tab i alt',
-                                ENU='Gain/Loss Overall';
+                    Caption='Gain/Loss Overall';
                     StyleExpr = StyleExprVar3;
                 }
             }
@@ -102,10 +98,10 @@ page 50121 "Security List"
                 SubPageLink = "Account No."=FIELD("Account No."),
                               "Security No."=FIELD("No.");
             }
-            systempart(;Links)
+            systempart(Links;Links)
             {
             }
-            systempart(;Notes)
+            systempart(Notes;Notes)
             {
             }
         }
@@ -115,14 +111,12 @@ page 50121 "Security List"
     {
         area(processing)
         {
-            group("Periodiske aktiviteter")
+            group(PeriodicActivity)
             {
-                CaptionML = DAN='Periodiske aktiviteter',
-                            ENU='Periodic Activities';
-                action("Køb/Sælg")
+                Caption='Periodic Activities';
+                action(BuySell)
                 {
-                    CaptionML = DAN='Køb/Sælg',
-                                ENU='Buy/Sell';
+                    Caption='Buy/Sell';
                     Image = Bank;
                     Promoted = true;
                     PromotedIsBig = true;
@@ -132,10 +126,9 @@ page 50121 "Security List"
                         BuySell();
                     end;
                 }
-                action("Opdater kurser")
+                action(UpdateRate)
                 {
-                    CaptionML = DAN='Opdater kurser',
-                                ENU='Update Rates';
+                    Caption='Update Rates';
                     Image = NewExchangeRate;
                     Promoted = true;
                     PromotedIsBig = true;
@@ -145,10 +138,9 @@ page 50121 "Security List"
                         UpdateRate();
                     end;
                 }
-                action("Registrer udbytte")
+                action(RegisterReturn)
                 {
-                    CaptionML = DAN='Registrer udbytte',
-                                ENU='Register Return';
+                    Caption='Register Return';
                     Image = CalculateDiscount;
                     Promoted = true;
                     PromotedIsBig = true;
@@ -159,14 +151,12 @@ page 50121 "Security List"
                     end;
                 }
             }
-            group(Poster)
+            group(Entries)
             {
-                CaptionML = DAN='Poster',
-                            ENU='Entries';
-                action(Handler)
+                Caption='Entries';
+                action(Trades)
                 {
-                    CaptionML = DAN='Handler',
-                                ENU='Trades';
+                    Caption='Trades';
                     Image = CashFlow;
                     Promoted = true;
                     PromotedCategory = Category5;
@@ -174,10 +164,9 @@ page 50121 "Security List"
                     RunPageLink = "Security No."=FIELD("No."),
                                   "Account No."=FIELD("Account No.");
                 }
-                action(Udbytte)
+                action(Returns)
                 {
-                    CaptionML = DAN='Udbytte',
-                                ENU='Returns';
+                    Caption='Returns';
                     Image = CoupledCurrency;
                     Promoted = true;
                     PromotedCategory = Category5;
@@ -185,10 +174,9 @@ page 50121 "Security List"
                     RunPageLink = "Security No."=FIELD("No."),
                                   "Account No."=FIELD("Account No.");
                 }
-                action(Kurser)
+                action(Rates)
                 {
-                    CaptionML = DAN='Kurser',
-                                ENU='Rates';
+                    Caption='Rates';
                     Image = PayrollStatistics;
                     Promoted = true;
                     PromotedCategory = Category5;
@@ -213,7 +201,7 @@ page 50121 "Security List"
     end;
 
     var
-        SecurityFunctions : Codeunit "50006";
+        SecurityFunctions : Codeunit "Security Functions";
         StyleExprVar : Text;
         StyleExprVar2 : Text;
         StyleExprVar3 : Text;
